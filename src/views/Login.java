@@ -1,12 +1,14 @@
 package views;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import model.Usuario;
+import controller.UsuarioController;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import java.awt.Font;
@@ -18,9 +20,14 @@ import java.awt.Toolkit;
 
 public class Login extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtUsuario;
 	private JPasswordField txtContrasena;
+	private UsuarioController usuarioController;
 
 	/**
 	 * Launch the application.
@@ -42,6 +49,9 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		
+		this.usuarioController = new UsuarioController();
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/imagenes/perfil-del-usuario.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 538);
@@ -79,9 +89,19 @@ public class Login extends JFrame {
 		btnLogin.setIcon(new ImageIcon(Login.class.getResource("/imagenes/perfil-del-usuario.png")));
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenuUsuario usuario = new MenuUsuario();
-				usuario.setVisible(true);
-				dispose();
+				//TODO
+				//System.out.println(txtUsuario.getText()+"-"+txtContrasena.getText());
+				var user = new Usuario(txtUsuario.getText(),txtContrasena.getText());
+				if(usuarioController.login(user)) {
+					JOptionPane.showMessageDialog(null, "Usuario y contraseña correctas!!");
+					MenuUsuario usuario = new MenuUsuario();
+					usuario.setVisible(true);
+					dispose();
+				}else {
+					JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas, intente de nuevo");
+					txtUsuario.setText("");
+					txtContrasena.setText("");
+				}
 			}
 		});
 		btnLogin.setBounds(409, 322, 103, 33);

@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.SystemColor;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JTextField;
@@ -69,14 +70,14 @@ public class Reservas extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JDateChooser txtFechaE = new JDateChooser();
-		txtFechaE.setBounds(88, 166, 235, 33);
-		panel.add(txtFechaE);
-		
 		JLabel lblNewLabel_1 = new JLabel("Fecha de Check In");
 		lblNewLabel_1.setBounds(88, 142, 133, 14);
 		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 14));
 		panel.add(lblNewLabel_1);
+	
+		JDateChooser txtFechaE = new JDateChooser();
+		txtFechaE.setBounds(88, 166, 235, 33);
+		panel.add(txtFechaE);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Fecha de Check Out");
 		lblNewLabel_1_1.setBounds(88, 210, 133, 14);
@@ -119,9 +120,16 @@ public class Reservas extends JFrame {
 		JButton btnReservar = new JButton("Continuar");
 		btnReservar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RegistroHuesped huesped = new RegistroHuesped();
-				huesped.setVisible(true);
-				dispose();
+				if(!txtFechaE.isValid()||!txtFechaS.isValid()) {
+					
+					System.out.println(txtFechaE.getDate().toLocaleString());
+					
+//					RegistroHuesped huesped = new RegistroHuesped();
+//					huesped.setVisible(true);
+//					dispose();
+				}else {
+					JOptionPane.showMessageDialog(null, "Debe ingresar fechas de check in y check out validas");
+				}
 			}
 		});
 		btnReservar.setForeground(Color.WHITE);
