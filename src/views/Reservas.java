@@ -1,6 +1,6 @@
 package views;
 
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -13,6 +13,9 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
+
+import controller.ReservaController;
+
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -20,6 +23,10 @@ import javax.swing.JPopupMenu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Date;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -29,8 +36,13 @@ import java.awt.Toolkit;
 
 public class Reservas extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtValor;
+	private ReservaController reservaController;
 
 	/**
 	 * Launch the application.
@@ -79,6 +91,7 @@ public class Reservas extends JFrame {
 		txtFechaE.setBounds(88, 166, 235, 33);
 		panel.add(txtFechaE);
 		
+		
 		JLabel lblNewLabel_1_1 = new JLabel("Fecha de Check Out");
 		lblNewLabel_1_1.setBounds(88, 210, 133, 14);
 		lblNewLabel_1_1.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -117,23 +130,63 @@ public class Reservas extends JFrame {
 		lblNewLabel_4.setFont(new Font("Arial", Font.BOLD, 20));
 		panel.add(lblNewLabel_4);
 		
+		
+		
+		
+		
+		txtFechaE.getDateEditor().addPropertyChangeListener(
+				new PropertyChangeListener() {
+					
+					
+					@Override
+					public void propertyChange(PropertyChangeEvent e) {
+						try {
+							if("date".equals(e.getPropertyName()) && txtFechaS.getDate().getDate() > txtFechaE.getDate().getDate() ) {
+							System.out.println((txtFechaS.getDate().getDate()-txtFechaE.getDate().getDate())*7500);
+							}
+						} catch (Exception e2) {
+							// TODO: handle exception
+						}
+					
+					}
+				}
+				);
+		txtFechaS.getDateEditor().addPropertyChangeListener(
+				new PropertyChangeListener() {
+					
+					
+					@Override
+					public void propertyChange(PropertyChangeEvent e) {
+						try {
+							if("date".equals(e.getPropertyName()) && txtFechaS.getDate().getDate() > txtFechaE.getDate().getDate() ) {
+								System.out.println((txtFechaS.getDate().getDate()-txtFechaE.getDate().getDate())*7500);
+								}	  
+						} catch (Exception e2) {
+							// TODO: handle exception
+						}
+					}
+				}
+				);
+		
+		
+		
 		JButton btnReservar = new JButton("Continuar");
 		btnReservar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-			
-				
-//				System.out.println(!txtFechaE.isValid());
-//				System.out.println(!txtFechaS.isValid());
 				if(!txtFechaE.isValid() && !txtFechaS.isValid() && txtFechaS.getDate().getDate() > txtFechaE.getDate().getDate() ) {
 					var diaE = txtFechaE.getDate().getDate();
 					var mesE = txtFechaE.getDate().getMonth()+1; 
 					var anioE = txtFechaE.getDate().getYear()+1900;
 					var diaS = txtFechaS.getDate().getDate();
 					var mesS = txtFechaS.getDate().getMonth()+1; 
-					var anioS = txtFechaS.getDate().getYear()+1900; 
+					var anioS = txtFechaS.getDate().getYear()+1900;
+					var estadia = txtFechaS.getDate().getDate()-txtFechaE.getDate().getDate();
+					var valor = 7500;
 					System.out.println(anioE+"-"+mesE+"-"+diaE);
 					System.out.println(anioS+"-"+mesS+"-"+diaS);
+					System.out.println();
+					
 					
 //					RegistroHuesped huesped = new RegistroHuesped();
 //					huesped.setVisible(true);
@@ -167,6 +220,8 @@ public class Reservas extends JFrame {
 		lblNewLabel_2.setBounds(15, 6, 104, 107);
 		panel.add(lblNewLabel_2);
 	}
+	
+
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
