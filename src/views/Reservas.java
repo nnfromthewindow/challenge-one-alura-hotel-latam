@@ -120,9 +120,20 @@ public class Reservas extends JFrame {
 		JButton btnReservar = new JButton("Continuar");
 		btnReservar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!txtFechaE.isValid()||!txtFechaS.isValid()) {
-					
-					System.out.println(txtFechaE.getDate().toLocaleString());
+				
+			
+				
+//				System.out.println(!txtFechaE.isValid());
+//				System.out.println(!txtFechaS.isValid());
+				if(!txtFechaE.isValid() && !txtFechaS.isValid() && txtFechaS.getDate().getDate() > txtFechaE.getDate().getDate() ) {
+					var diaE = txtFechaE.getDate().getDate();
+					var mesE = txtFechaE.getDate().getMonth()+1; 
+					var anioE = txtFechaE.getDate().getYear()+1900;
+					var diaS = txtFechaS.getDate().getDate();
+					var mesS = txtFechaS.getDate().getMonth()+1; 
+					var anioS = txtFechaS.getDate().getYear()+1900; 
+					System.out.println(anioE+"-"+mesE+"-"+diaE);
+					System.out.println(anioS+"-"+mesS+"-"+diaS);
 					
 //					RegistroHuesped huesped = new RegistroHuesped();
 //					huesped.setVisible(true);
