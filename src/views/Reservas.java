@@ -25,7 +25,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
 import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -43,6 +50,7 @@ public class Reservas extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtValor;
 	private ReservaController reservaController;
+	private int valorDia =7500;
 
 	/**
 	 * Launch the application.
@@ -141,11 +149,26 @@ public class Reservas extends JFrame {
 					@Override
 					public void propertyChange(PropertyChangeEvent e) {
 						try {
-							if("date".equals(e.getPropertyName()) && txtFechaS.getDate().getDate() > txtFechaE.getDate().getDate() ) {
-							System.out.println((txtFechaS.getDate().getDate()-txtFechaE.getDate().getDate())*7500);
+							if("date".equals(e.getPropertyName()) && txtFechaS.getDate().getTime() > txtFechaE.getDate().getTime() ) {
+						
+								    Date firstDate = txtFechaE.getDate();
+								    Date secondDate = txtFechaS.getDate();
+								    long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+								    long cantidadDias = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+								    String valor = Long.toString(cantidadDias*valorDia);
+								    String pattern = "###,###,###";
+								    double value = Double.valueOf(valor);
+								    DecimalFormat myFormatter = new DecimalFormat(pattern);
+								    String output = myFormatter.format(value);
+								    txtValor.setText("$"+" "+output);
+								    
+								    System.out.println(cantidadDias);
+								    
+							}else if("date".equals(e.getPropertyName()) && txtFechaS.getDate().getTime() < txtFechaE.getDate().getTime() ){
+								txtValor.setText("");
 							}
 						} catch (Exception e2) {
-							// TODO: handle exception
+					
 						}
 					
 					}
@@ -158,11 +181,26 @@ public class Reservas extends JFrame {
 					@Override
 					public void propertyChange(PropertyChangeEvent e) {
 						try {
-							if("date".equals(e.getPropertyName()) && txtFechaS.getDate().getDate() > txtFechaE.getDate().getDate() ) {
-								System.out.println((txtFechaS.getDate().getDate()-txtFechaE.getDate().getDate())*7500);
+							if("date".equals(e.getPropertyName()) && txtFechaS.getDate().getTime() > txtFechaE.getDate().getTime()) {
+						
+								Date firstDate = txtFechaE.getDate();
+							    Date secondDate = txtFechaS.getDate();
+							    long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+							    long cantidadDias = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+							    String valor = Long.toString(cantidadDias*valorDia);
+							    String pattern = "###,###,###";
+							    double value = Double.valueOf(valor);
+							    DecimalFormat myFormatter = new DecimalFormat(pattern);
+							    String output = myFormatter.format(value);
+							    txtValor.setText("$"+" "+output);
+							    
+							    System.out.println(cantidadDias);
+								
+							}else if("date".equals(e.getPropertyName()) && txtFechaS.getDate().getTime() < txtFechaE.getDate().getTime() ) {
+									txtValor.setText("");
 								}	  
 						} catch (Exception e2) {
-							// TODO: handle exception
+					
 						}
 					}
 				}
