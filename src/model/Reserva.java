@@ -8,11 +8,11 @@ public class Reserva {
 	
 	private String checkout;
 	
-	private Integer valor;
+	private Long valor;
 	
 	private Integer formaPago;
 	
-	public Reserva(String checkin, String checkout, Integer valor, Integer formaPago) {
+	public Reserva(String checkin, String checkout, Long valor, Integer formaPago) {
 		this.checkin = checkin;
 		this.checkout = checkout;
 		this.valor = valor;
@@ -31,12 +31,31 @@ public class Reserva {
 		return checkout;
 	}
 
-	public Integer getValor() {
+	public Long getValor() {
 		return valor;
 	}
 
 	public Integer getFormaPago() {
 		return formaPago;
+	}
+	public void setIdReserva(Integer idReserva) {
+		this.idReserva = idReserva;
+	}
+
+	public void setCheckin(String checkin) {
+		this.checkin = checkin;
+	}
+
+	public void setCheckout(String checkout) {
+		this.checkout = checkout;
+	}
+
+	public void setValor(Long valor) {
+		this.valor = valor;
+	}
+
+	public void setFormaPago(Integer formaPago) {
+		this.formaPago = formaPago;
 	}
 
 	

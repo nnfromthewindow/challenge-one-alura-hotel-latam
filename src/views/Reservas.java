@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
 import controller.ReservaController;
+import model.Reserva;
 
 import java.awt.Font;
 import javax.swing.JComboBox;
@@ -161,7 +162,7 @@ public class Reservas extends JFrame {
 								    DecimalFormat myFormatter = new DecimalFormat(pattern);
 								    String output = myFormatter.format(value);
 								    txtValor.setText("$"+" "+output);
-								    System.out.println(cantidadDias);
+								    System.out.println("Cantidad de dias"+cantidadDias);
 								    
 							}else if("date".equals(e.getPropertyName()) && txtFechaS.getDate().getTime() < txtFechaE.getDate().getTime() ){
 								txtValor.setText("");
@@ -192,7 +193,7 @@ public class Reservas extends JFrame {
 							    DecimalFormat myFormatter = new DecimalFormat(pattern);
 							    String output = myFormatter.format(value);
 							    txtValor.setText("$"+" "+output);
-							    System.out.println(cantidadDias);
+							    System.out.println("Cantidad de dias"+cantidadDias);
 								
 							}else if("date".equals(e.getPropertyName()) && txtFechaS.getDate().getTime() < txtFechaE.getDate().getTime() ) {
 									txtValor.setText("");
@@ -233,13 +234,25 @@ public class Reservas extends JFrame {
 				    }
 					if(cantidadDias>1 && txtFechaS.getDate().compareTo(txtFechaE.getDate()) > 0 && fechaEntrada!=fechaSalida) {
 						
-						//Reserva reserva = new Reserva(fechaEntrada,fechaSalida);
-						
-						//reservaController.reservar(null);
-						System.out.println(fechaEntrada);
-						System.out.println(fechaSalida);
-						//System.out.println(txtFechaE.getDate().toLocaleString());
-						System.out.println(valorEstadiaParsed);
+						int formaPago = 0;
+						switch(txtFormaPago.getSelectedIndex()) {
+						case 0 : formaPago=1;
+						break;
+						case 1 : formaPago=2;
+						break;
+						case 2 : formaPago=3;
+						}
+						System.out.println("Forma de Pago: "+formaPago);
+						Reserva reserva = new Reserva(fechaEntrada,fechaSalida,valorEstadiaParsed,formaPago);
+						System.out.println(reserva.getCheckin());
+						System.out.println(reserva.getCheckout());
+						System.out.println(reserva.getValor());
+						System.out.println(reserva.getFormaPago());
+						//reservaController.reservar(reserva);
+						//System.out.println("checkin: "+fechaEntrada);
+						//System.out.println("checkout: "+fechaSalida);
+						//System.out.println(reserva);
+						//System.out.println("valorLong: "+valorEstadiaParsed);
 						JOptionPane.showMessageDialog(null, "Registro Exitoso!!!");
 						
 						RegistroHuesped huesped = new RegistroHuesped();
