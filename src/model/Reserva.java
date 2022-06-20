@@ -19,5 +19,25 @@ public class Reserva {
 		this.formaPago = formaPago;
 	}
 	
+	public Integer getIdReserva() {
+		return idReserva;
+	}
+
+	public String getCheckin() {
+		return checkin;
+	}
+
+	public String getCheckout() {
+		return checkout;
+	}
+
+	public Integer getValor() {
+		return valor;
+	}
+
+	public Integer getFormaPago() {
+		return formaPago;
+	}
+
 	
 }

@@ -161,7 +161,6 @@ public class Reservas extends JFrame {
 								    DecimalFormat myFormatter = new DecimalFormat(pattern);
 								    String output = myFormatter.format(value);
 								    txtValor.setText("$"+" "+output);
-								    txtFechaE.getCalendar();
 								    System.out.println(cantidadDias);
 								    
 							}else if("date".equals(e.getPropertyName()) && txtFechaS.getDate().getTime() < txtFechaE.getDate().getTime() ){
@@ -193,7 +192,6 @@ public class Reservas extends JFrame {
 							    DecimalFormat myFormatter = new DecimalFormat(pattern);
 							    String output = myFormatter.format(value);
 							    txtValor.setText("$"+" "+output);
-							    txtFechaS.getCalendar();
 							    System.out.println(cantidadDias);
 								
 							}else if("date".equals(e.getPropertyName()) && txtFechaS.getDate().getTime() < txtFechaE.getDate().getTime() ) {
@@ -212,43 +210,48 @@ public class Reservas extends JFrame {
 		btnReservar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				var diaE = txtFechaE.getDate().getDate();
-				var mesE = txtFechaE.getDate().getMonth()+1; 
-				var anioE = txtFechaE.getDate().getYear()+1900;
-				var diaS = txtFechaS.getDate().getDate();
-				var mesS = txtFechaS.getDate().getMonth()+1; 
-				var anioS = txtFechaS.getDate().getYear()+1900;
-				String fechaEntrada = anioE+"-"+mesE+"-"+diaE;
-				String fechaSalida = anioS+"-"+mesS+"-"+diaS;
-				var valorEstadia = txtValor.getText();
 				
-				Date firstDate = txtFechaE.getDate();
-			    Date secondDate = txtFechaS.getDate();
-			    long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
-			    long cantidadDias = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-			    if(cantidadDias<1) {
-			    	JOptionPane.showMessageDialog(null, "Debe ingresar fechas de check in y check out validas");
-			    	return;
-			    }
-				if(txtFechaS.getDate().compareTo(txtFechaE.getDate()) > 0 && fechaEntrada!=fechaSalida) {
-					
-					
-					System.out.println(fechaEntrada);
-					System.out.println(fechaSalida);
-					//System.out.println(txtFechaE.getDate().toLocaleString());
-					System.out.println(valorEstadia);
-					JOptionPane.showMessageDialog(null, "Registro Exitoso!!!");
-					
-//					RegistroHuesped huesped = new RegistroHuesped();
-//					huesped.setVisible(true);
-//					dispose();
-				}
-//				if(valorEstadia=="$ 0 ") {
-//					JOptionPane.showMessageDialog(null, "Debe ingresar fechas de check in y check out validas");
-//				}
+			    try {
+			    	var diaE = txtFechaE.getDate().getDate();
+					var mesE = txtFechaE.getDate().getMonth()+1; 
+					var anioE = txtFechaE.getDate().getYear()+1900;
+					var diaS = txtFechaS.getDate().getDate();
+					var mesS = txtFechaS.getDate().getMonth()+1; 
+					var anioS = txtFechaS.getDate().getYear()+1900;
+					String fechaEntrada = anioE+"-"+mesE+"-"+diaE;
+					String fechaSalida = anioS+"-"+mesS+"-"+diaS;
+					var valorEstadia = txtValor.getText();
+					Date firstDate = txtFechaE.getDate();
+				    Date secondDate = txtFechaS.getDate();
+				    long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+				    long cantidadDias = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+				    long valorEstadiaParsed = cantidadDias*valorDia;
+				    
+			    	if(cantidadDias<1) {
+				    	JOptionPane.showMessageDialog(null, "Debe ingresar fechas de check in y check out validas");
+				    	return;
+				    }
+					if(cantidadDias>1 && txtFechaS.getDate().compareTo(txtFechaE.getDate()) > 0 && fechaEntrada!=fechaSalida) {
+						
+						//Reserva reserva = new Reserva(fechaEntrada,fechaSalida);
+						
+						//reservaController.reservar(null);
+						System.out.println(fechaEntrada);
+						System.out.println(fechaSalida);
+						//System.out.println(txtFechaE.getDate().toLocaleString());
+						System.out.println(valorEstadiaParsed);
+						JOptionPane.showMessageDialog(null, "Registro Exitoso!!!");
+						
+						RegistroHuesped huesped = new RegistroHuesped();
+						huesped.setVisible(true);
+						dispose();
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Debe ingresar fechas de check in y check out validas");
+					}
 				
-				else {
-					JOptionPane.showMessageDialog(null, "Debe ingresar fechas de check in y check out validas");
+				} catch (Exception e2) {
+					// TODO: handle exception
 				}
 			}
 		});
