@@ -1,6 +1,5 @@
 package views;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,6 +8,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import java.awt.Color;
 import com.toedter.calendar.JDateChooser;
+
+import controller.HuespedController;
+import controller.ReservaController;
+import model.Reserva;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
@@ -22,11 +26,20 @@ import java.awt.Toolkit;
 
 public class RegistroHuesped extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtNombre;
 	private JTextField txtApellido;
 	private JTextField txtTelefono;
 	private JTextField txtNreserva;
+	
+	private Reserva reserva;
+	private ReservaController reservaController;
+	private HuespedController huespedController;
+	private int idReserva=reservaController.getIdReserva();
 
 	/**
 	 * Launch the application.
@@ -161,13 +174,21 @@ public class RegistroHuesped extends JFrame {
 		JLabel lblNewLabel_1_2_1 = new JLabel("Número de Reserva");
 		lblNewLabel_1_2_1.setFont(new Font("Arial", Font.PLAIN, 14));
 		lblNewLabel_1_2_1.setBounds(578, 455, 253, 14);
+		lblNewLabel_1_2_1.setText("Id Reserva");
 		contentPane.add(lblNewLabel_1_2_1);
+		
+		
 		
 		txtNreserva = new JTextField();
 		txtNreserva.setEnabled(false);
 		txtNreserva.setColumns(10);
 		txtNreserva.setBackground(Color.WHITE);
 		txtNreserva.setBounds(576, 480, 255, 33);
+		txtNreserva.setText(String.valueOf(idReserva));
 		contentPane.add(txtNreserva);
+	}
+	
+	public void setIdReserva(int idReserva) {
+		this.idReserva = idReserva;
 	}
 }

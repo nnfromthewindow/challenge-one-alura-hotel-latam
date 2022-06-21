@@ -14,6 +14,7 @@ import java.awt.Color;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
+import controller.HuespedController;
 import controller.ReservaController;
 import model.Reserva;
 
@@ -51,6 +52,7 @@ public class Reservas extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtValor;
 	private ReservaController reservaController;
+	private HuespedController huespedController;
 	private int valorDia =7500;
 
 	/**
@@ -140,7 +142,7 @@ public class Reservas extends JFrame {
 		panel.add(lblNewLabel_4);
 		
 		
-		
+		this.reservaController = new ReservaController();
 		
 		
 		txtFechaE.getDateEditor().addPropertyChangeListener(
@@ -162,7 +164,7 @@ public class Reservas extends JFrame {
 								    DecimalFormat myFormatter = new DecimalFormat(pattern);
 								    String output = myFormatter.format(value);
 								    txtValor.setText("$"+" "+output);
-								    System.out.println("Cantidad de dias"+cantidadDias);
+								  
 								    
 							}else if("date".equals(e.getPropertyName()) && txtFechaS.getDate().getTime() < txtFechaE.getDate().getTime() ){
 								txtValor.setText("");
@@ -193,7 +195,7 @@ public class Reservas extends JFrame {
 							    DecimalFormat myFormatter = new DecimalFormat(pattern);
 							    String output = myFormatter.format(value);
 							    txtValor.setText("$"+" "+output);
-							    System.out.println("Cantidad de dias"+cantidadDias);
+		
 								
 							}else if("date".equals(e.getPropertyName()) && txtFechaS.getDate().getTime() < txtFechaE.getDate().getTime() ) {
 									txtValor.setText("");
@@ -232,7 +234,7 @@ public class Reservas extends JFrame {
 				    	JOptionPane.showMessageDialog(null, "Debe ingresar fechas de check in y check out validas");
 				    	return;
 				    }
-					if(cantidadDias>1 && txtFechaS.getDate().compareTo(txtFechaE.getDate()) > 0 && fechaEntrada!=fechaSalida) {
+					if(txtFechaS.getDate().compareTo(txtFechaE.getDate()) > 0 && fechaEntrada!=fechaSalida) {
 						
 						int formaPago = 0;
 						switch(txtFormaPago.getSelectedIndex()) {
@@ -242,17 +244,13 @@ public class Reservas extends JFrame {
 						break;
 						case 2 : formaPago=3;
 						}
-						System.out.println("Forma de Pago: "+formaPago);
+
 						Reserva reserva = new Reserva(fechaEntrada,fechaSalida,valorEstadiaParsed,formaPago);
-						System.out.println(reserva.getCheckin());
-						System.out.println(reserva.getCheckout());
-						System.out.println(reserva.getValor());
-						System.out.println(reserva.getFormaPago());
-						//reservaController.reservar(reserva);
-						//System.out.println("checkin: "+fechaEntrada);
-						//System.out.println("checkout: "+fechaSalida);
-						//System.out.println(reserva);
-						//System.out.println("valorLong: "+valorEstadiaParsed);
+
+						reservaController.reservar(reserva);
+						//huespedController.setIdReserva(reserva);
+						
+
 						JOptionPane.showMessageDialog(null, "Registro Exitoso!!!");
 						
 						RegistroHuesped huesped = new RegistroHuesped();

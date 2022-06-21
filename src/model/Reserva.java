@@ -18,6 +18,9 @@ public class Reserva {
 		this.valor = valor;
 		this.formaPago = formaPago;
 	}
+	public Reserva(Integer idReserva) {
+		this.idReserva=idReserva;
+	}
 	
 	public Integer getIdReserva() {
 		return idReserva;
