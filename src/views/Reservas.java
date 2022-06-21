@@ -52,7 +52,6 @@ public class Reservas extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtValor;
 	private ReservaController reservaController;
-	private HuespedController huespedController;
 	private int valorDia =7500;
 
 	/**
@@ -245,15 +244,15 @@ public class Reservas extends JFrame {
 						case 2 : formaPago=3;
 						}
 
-						Reserva reserva = new Reserva(fechaEntrada,fechaSalida,valorEstadiaParsed,formaPago);
+						var reserva = new Reserva(fechaEntrada,fechaSalida,valorEstadiaParsed,formaPago);
 
 						reservaController.reservar(reserva);
-						//huespedController.setIdReserva(reserva);
-						
+				
+						System.out.println("El indice es: "+reserva.getIdReserva());
 
 						JOptionPane.showMessageDialog(null, "Registro Exitoso!!!");
 						
-						RegistroHuesped huesped = new RegistroHuesped();
+						RegistroHuesped huesped = new RegistroHuesped(reserva.getIdReserva());
 						huesped.setVisible(true);
 						dispose();
 					}

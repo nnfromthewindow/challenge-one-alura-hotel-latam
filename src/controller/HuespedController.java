@@ -3,6 +3,7 @@ package controller;
 import dao.HuespedDAO;
 import dao.ReservaDAO;
 import factory.ConnectionFactory;
+import model.Huesped;
 import model.Reserva;
 
 public class HuespedController {
@@ -14,7 +15,8 @@ public class HuespedController {
 		this.huespedDao = new HuespedDAO(factory.abrirConexion());
 	};
 
-	public int setIdReserva(Reserva reserva) {
-		return reserva.getIdReserva();
+	public void agregarHuesped(Huesped huesped) {
+		huespedDao.agregarHuesped(huesped);
+		System.out.println("Huesped Insertado en Id:"+huesped.getIdReserva());
 	}
 }

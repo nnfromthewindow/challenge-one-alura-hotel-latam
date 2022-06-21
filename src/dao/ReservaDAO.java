@@ -19,7 +19,7 @@ public class ReservaDAO {
 	
 	public void agregarReserva(Reserva reserva) {
 		try {
-			//String query = "INSERT INTO reservas_dos(fecha_entrada, fecha_salida, valor, forma_pago)"+"VALUES(?,?,?,?)";
+			
 			PreparedStatement statement;
 				statement = con.prepareStatement("INSERT INTO reservas(fecha_entrada, fecha_salida, valor, forma_pago)"+"VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 			
@@ -30,7 +30,7 @@ public class ReservaDAO {
 					statement.setInt(4, reserva.getFormaPago());
 					int affectedRows = statement.executeUpdate();
 					 if (affectedRows == 0) {
-				            throw new SQLException("Creating user failed, no rows affected.");
+				            throw new SQLException("Fallo el registro, intente de nuevo");
 				        }
 
 				        try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
@@ -38,7 +38,7 @@ public class ReservaDAO {
 				                reserva.setIdReserva(generatedKeys.getInt(1));
 				            }
 				            else {
-				                throw new SQLException("Creating user failed, no ID obtained.");
+				                throw new SQLException("Fallo el registro, intente de nuevo");
 				            }
 					System.out.println("insertado con exito!!!");
 				        }
@@ -46,14 +46,5 @@ public class ReservaDAO {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		
 	}
-	
-//	public void getIdReserva(Reserva reserva) {
-//		PreparedStatement statement;
-//		statement = con.prepareStatement("INSERT INTO reservas(fecha_entrada, fecha_salida, valor, forma_pago)"+"VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-//	
-//		
-//	}
-
 }

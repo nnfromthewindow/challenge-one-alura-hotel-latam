@@ -8,10 +8,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import java.awt.Color;
 import com.toedter.calendar.JDateChooser;
-
 import controller.HuespedController;
-import controller.ReservaController;
-import model.Reserva;
+import model.Huesped;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -35,11 +33,19 @@ public class RegistroHuesped extends JFrame {
 	private JTextField txtApellido;
 	private JTextField txtTelefono;
 	private JTextField txtNreserva;
-	
-	private Reserva reserva;
-	private ReservaController reservaController;
 	private HuespedController huespedController;
-	private int idReserva=reservaController.getIdReserva();
+	private static int idReserva;
+	
+
+	public static int getIdReserva() {
+		return idReserva;
+	}
+
+
+	public void setIdReserva(int idReserva) {
+		RegistroHuesped.idReserva = idReserva;
+	}
+	
 
 	/**
 	 * Launch the application.
@@ -48,7 +54,7 @@ public class RegistroHuesped extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RegistroHuesped frame = new RegistroHuesped();
+					RegistroHuesped frame = new RegistroHuesped(idReserva);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,7 +66,7 @@ public class RegistroHuesped extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegistroHuesped() {
+	public RegistroHuesped(int idReserva) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuesped.class.getResource("/imagenes/persona.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 634);
@@ -102,7 +108,7 @@ public class RegistroHuesped extends JFrame {
 		lblNewLabel_1_1.setBounds(576, 194, 255, 14);
 		contentPane.add(lblNewLabel_1_1);
 		
-		JLabel lblNewLabel_1_1_1 = new JLabel("Fecha de Nascimiento");
+		JLabel lblNewLabel_1_1_1 = new JLabel("Fecha de Nacimiento");
 		lblNewLabel_1_1_1.setFont(new Font("Arial", Font.PLAIN, 14));
 		lblNewLabel_1_1_1.setBounds(576, 256, 255, 14);
 		contentPane.add(lblNewLabel_1_1_1);
@@ -126,9 +132,31 @@ public class RegistroHuesped extends JFrame {
 		JButton btnGuardar = new JButton("");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Exito exito = new Exito();
-				exito.setVisible(true);
-				dispose();
+				try {
+					var dia = txtFechaN.getDate().getDate();
+					var mes = txtFechaN.getDate().getMonth()+1; 
+					var anio = txtFechaN.getDate().getYear()+1900;
+					String fechaNacimiento = anio+"-"+mes+"-"+dia;
+						
+					var huesped = new Huesped(
+							txtNombre.getText(),
+							txtApellido.getText(),
+							fechaNacimiento,
+							String.valueOf(txtNacionalidad.getSelectedItem()),
+							txtTelefono.getText(),
+							idReserva
+							);
+					
+					huespedController.agregarHuesped(huesped);
+					
+					
+					
+					Exito exito = new Exito();
+					exito.setVisible(true);
+					dispose();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
 			}
 		});
 		btnGuardar.setIcon(new ImageIcon(RegistroHuesped.class.getResource("/imagenes/disquete.png")));
@@ -177,7 +205,7 @@ public class RegistroHuesped extends JFrame {
 		lblNewLabel_1_2_1.setText("Id Reserva");
 		contentPane.add(lblNewLabel_1_2_1);
 		
-		
+	
 		
 		txtNreserva = new JTextField();
 		txtNreserva.setEnabled(false);
@@ -186,9 +214,8 @@ public class RegistroHuesped extends JFrame {
 		txtNreserva.setBounds(576, 480, 255, 33);
 		txtNreserva.setText(String.valueOf(idReserva));
 		contentPane.add(txtNreserva);
+		
+		
 	}
 	
-	public void setIdReserva(int idReserva) {
-		this.idReserva = idReserva;
-	}
 }
