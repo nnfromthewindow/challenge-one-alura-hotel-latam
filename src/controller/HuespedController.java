@@ -1,10 +1,9 @@
 package controller;
 
 import dao.HuespedDAO;
-import dao.ReservaDAO;
 import factory.ConnectionFactory;
 import model.Huesped;
-import model.Reserva;
+
 
 public class HuespedController {
 	
@@ -17,6 +16,10 @@ public class HuespedController {
 
 	public void agregarHuesped(Huesped huesped) {
 		huespedDao.agregarHuesped(huesped);
-		System.out.println("Huesped Insertado en Id:"+huesped.getIdReserva());
 	}
+	
+	public Integer borrarHuesped(Integer id) {
+		return huespedDao.borrarReserva(id);
+	}
+	
 }

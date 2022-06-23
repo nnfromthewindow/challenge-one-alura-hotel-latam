@@ -2,12 +2,16 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.HuespedController;
+import controller.ReservaController;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Font;
@@ -18,14 +22,46 @@ import java.awt.Toolkit;
 
 public class Exito extends JDialog {
 
+	/**
+	 * 
+	 */
+	
+	private static final long serialVersionUID = 1L;
+	
 	private final JPanel contentPanel = new JPanel();
+	
+	private HuespedController huespedController;
+	
+	private static int idReserva;
+	
+	private static int idHuesped;
+	
+	public static int getIdHuesped() {
+		return idHuesped;
+	}
 
+
+	public static void setIdHuesped(int idHuesped) {
+		Exito.idHuesped = idHuesped;
+	}
+
+
+	public static int getIdReserva() {
+		return idReserva;
+	}
+
+
+	public void setIdReserva(int idReserva) {
+		Exito.idReserva = idReserva;
+	}
+	
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			Exito dialog = new Exito();
+			Exito dialog = new Exito(idHuesped,idReserva);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -36,7 +72,10 @@ public class Exito extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public Exito() {
+	public Exito(int idHuesped,int idReservaHuesped) {
+		
+		this.huespedController = new HuespedController();
+		setIdReserva(idReserva);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Exito.class.getResource("/imagenes/aH-40px.png")));
 		setBounds(100, 100, 394, 226);
 		getContentPane().setLayout(new BorderLayout());
@@ -79,6 +118,18 @@ public class Exito extends JDialog {
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
+				cancelButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						huespedController.borrarHuesped(idHuesped);
+						JOptionPane.showMessageDialog(null, "Huesped eliminado, intente ingresarlo nuevamente");
+						RegistroHuesped huesped = new RegistroHuesped(idReservaHuesped);
+						huesped.setVisible(true);
+						dispose();
+					}
+					
+				});
 			}
 		}
 	}

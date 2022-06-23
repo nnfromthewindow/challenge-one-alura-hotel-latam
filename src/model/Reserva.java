@@ -10,6 +10,8 @@ public class Reserva {
 	
 	private Long valor;
 	
+	private String valorToString;
+	
 	private Integer formaPago;
 	
 	public Reserva(String checkin, String checkout, Long valor, Integer formaPago) {
@@ -18,6 +20,14 @@ public class Reserva {
 		this.valor = valor;
 		this.formaPago = formaPago;
 	}
+	
+	public Reserva(int id, String checkin, String checkout, String valorToString, Integer formaPago) {
+		this.checkin = checkin;
+		this.checkout = checkout;
+		this.valorToString = valorToString;
+		this.formaPago = formaPago;
+	}
+	
 	public Reserva(Integer idReserva) {
 		this.idReserva=idReserva;
 	}

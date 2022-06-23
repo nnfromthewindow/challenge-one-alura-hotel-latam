@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Reserva;
 
@@ -47,4 +49,35 @@ public class ReservaDAO {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	 public List<Reserva> listar() {
+	        List<Reserva> resultado = new ArrayList<>();
+
+	        try {
+	            final PreparedStatement statement = con
+	                    .prepareStatement("SELECT id, fecha_entrada, fecha_salida, valor, forma_pago FROM reservas");
+	    
+	            try (statement) {
+	                statement.execute();
+	    
+	                final ResultSet resultSet = statement.getResultSet();
+	    
+	                try (resultSet) {
+	                    while (resultSet.next()) {
+	                        resultado.add(new Reserva(
+	                                resultSet.getInt("id"),
+	                                resultSet.getString("fecha_entrada"),
+	                                resultSet.getString("fecha_salida"),
+	                                resultSet.getString("valorToString"),
+	                                resultSet.getInt("forma_pago")));
+	                    }
+	                }
+	            }
+	        } catch (SQLException e) {
+	            throw new RuntimeException(e);
+	        }
+
+	        return resultado;
+	    }
+
 }

@@ -18,8 +18,8 @@ public class ReservaController {
 		reservaDao.agregarReserva(reserva);
 		this.idReserva=reserva.getIdReserva();
 		
-}
-	
+	}
+
 	public int getIdReserva(Reserva reserva) {
 		return this.idReserva;
 	}

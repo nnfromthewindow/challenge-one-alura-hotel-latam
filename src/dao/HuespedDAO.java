@@ -5,9 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import model.Huesped;
-import model.Reserva;
+
 
 public class HuespedDAO {
 
@@ -19,17 +18,8 @@ private Connection con;
 	
 	public void agregarHuesped(Huesped huesped) {
 		try {
-			
-		
-			
 			PreparedStatement statement;
 				statement = con.prepareStatement("INSERT INTO huespedes(nombre,apellido,fecha_de_nacimiento,nacionalidad,telefono,id_reserva)"+"VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-			System.out.println(huesped.getNombre());
-			System.out.println(huesped.getApellido());
-			System.out.println(huesped.getFechaNacimiento());
-			System.out.println(huesped.getNacionalidad());
-			System.out.println(huesped.getTelefono());
-			System.out.println(huesped.getIdReserva());
 				try(statement) {
 					statement.setString(1, huesped.getNombre());
 					statement.setString(2, huesped.getApellido());
@@ -42,20 +32,34 @@ private Connection con;
 					 if (affectedRows == 0) {
 				            throw new SQLException("Fallo el registro, intente de nuevo");
 				        }
-					 System.out.println("insertado con exito!!!");
-
-//				        try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-//				            if (generatedKeys.next()) {
-//				                reserva.setIdReserva(generatedKeys.getInt(1));
-//				            }
-//				            else {
-//				                throw new SQLException("Fallo el registro, intente de nuevo");
-//				            }
-//					System.out.println("insertado con exito!!!");
-//				        }
+					 try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+				            if (generatedKeys.next()) {
+				                huesped.setIdHuesped(generatedKeys.getInt(1));
+				            }
+				            else {
+				                throw new SQLException("Fallo el registro, intente de nuevo");
+				            }
 				}
+			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	 public int borrarReserva(Integer id) {
+	        try {
+	            final PreparedStatement statement = con.prepareStatement("DELETE FROM huespedes WHERE ID = ?");
+
+	            try (statement) {
+	                statement.setInt(1, id);
+	                statement.execute();
+
+	                int updateCount = statement.getUpdateCount();
+
+	                return updateCount;
+	            }
+	        } catch (SQLException e) {
+	            throw new RuntimeException(e);
+	        }
+	    }
 }

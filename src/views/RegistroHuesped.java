@@ -10,11 +10,12 @@ import java.awt.Color;
 import com.toedter.calendar.JDateChooser;
 import controller.HuespedController;
 import model.Huesped;
-
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.HeadlessException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.SystemColor;
@@ -35,10 +36,14 @@ public class RegistroHuesped extends JFrame {
 	private JTextField txtNreserva;
 	private HuespedController huespedController;
 	private static int idReserva;
-	
+	private static int idHuesped;
 
 	public static int getIdReserva() {
 		return idReserva;
+	}
+	
+	public static int getIdHuesped() {
+		return idHuesped;
 	}
 
 
@@ -63,10 +68,15 @@ public class RegistroHuesped extends JFrame {
 		});
 	}
 
+	
+
 	/**
 	 * Create the frame.
 	 */
 	public RegistroHuesped(int idReserva) {
+		
+		this.huespedController=new HuespedController();
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuesped.class.getResource("/imagenes/persona.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 634);
@@ -75,8 +85,8 @@ public class RegistroHuesped extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
-		
-		txtNombre = new JTextField();
+		txtNombre
+		 = new JTextField();
 		txtNombre.setBackground(Color.WHITE);
 		txtNombre.setColumns(10);
 		txtNombre.setBounds(576, 150, 255, 33);
@@ -128,6 +138,18 @@ public class RegistroHuesped extends JFrame {
 		btnCancelar.setBackground(SystemColor.menu);
 		btnCancelar.setBounds(764, 543, 54, 41);
 		contentPane.add(btnCancelar);
+		btnCancelar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				txtNombre.setText("");
+				txtApellido.setText("");
+				txtFechaN.cleanup();
+				txtNacionalidad.setSelectedIndex(0);
+				txtTelefono.setText("");	
+			}
+		});
 		
 		JButton btnGuardar = new JButton("");
 		btnGuardar.addActionListener(new ActionListener() {
@@ -146,12 +168,13 @@ public class RegistroHuesped extends JFrame {
 							txtTelefono.getText(),
 							idReserva
 							);
-					
+			
+				
 					huespedController.agregarHuesped(huesped);
 					
-					
-					
-					Exito exito = new Exito();
+					System.out.println("id huesped: "+huesped.getIdHuesped());
+					System.out.println("id reserva: "+huesped.getIdReserva());
+					Exito exito = new Exito(huesped.getIdHuesped(),huesped.getIdReserva());
 					exito.setVisible(true);
 					dispose();
 				} catch (Exception e2) {

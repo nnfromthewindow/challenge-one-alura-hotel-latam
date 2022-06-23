@@ -1,6 +1,5 @@
 package views;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -23,6 +22,10 @@ import java.awt.Toolkit;
 
 public class Busqueda extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtBuscar;
 	private JTable tbHuespedes;
@@ -64,6 +67,13 @@ public class Busqueda extends JFrame {
 		JButton btnBuscar = new JButton("");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			
+			
+			
+			
+			
+			
+			
 			}
 		});
 		btnBuscar.setBackground(Color.WHITE);

@@ -2,6 +2,8 @@ package model;
 
 public class Huesped {
 	
+	private int idHuesped;
+
 	private String nombre;
 
 	private String apellido;
@@ -23,6 +25,8 @@ public class Huesped {
 		this.telefono = telefono;
 		this.idReserva = idReserva;
 	}
+	
+	
 	
 	public String getNombre() {
 		return nombre;
@@ -71,6 +75,13 @@ public class Huesped {
 	public void setIdReserva(int idReserva) {
 		this.idReserva = idReserva;
 	}
+	
+	public int getIdHuesped() {
+		return idHuesped;
+	}
 
+	public void setIdHuesped(int idHuesped) {
+		this.idHuesped = idHuesped;
+	}
 	
 }
