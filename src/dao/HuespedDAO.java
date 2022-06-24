@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import model.Huesped;
 
 
@@ -46,7 +48,7 @@ private Connection con;
 		}
 	}
 	
-	 public int borrarReserva(Integer id) {
+	 public int borrarHuesped(Integer id) {
 	        try {
 	            final PreparedStatement statement = con.prepareStatement("DELETE FROM huespedes WHERE ID = ?");
 
@@ -62,4 +64,115 @@ private Connection con;
 	            throw new RuntimeException(e);
 	        }
 	    }
+
+	 public List<Huesped> listar() {
+	        List<Huesped> resultado = new ArrayList<>();
+
+	        try {
+	            final PreparedStatement statement = con
+	                    .prepareStatement("SELECT id, nombre, apellido, fecha_de_nacimiento, nacionalidad, telefono, id_reserva FROM huespedes");
+	    
+	            try (statement) {
+	                statement.execute();
+	    
+	                final ResultSet resultSet = statement.getResultSet();
+	    
+	                try (resultSet) {
+	                    while (resultSet.next()) {
+	                        resultado.add(new Huesped(
+	                                resultSet.getInt("id"),
+	                                resultSet.getString("nombre"),
+	                                resultSet.getString("apellido"),
+	                                resultSet.getString("fecha_de_nacimiento"),
+	                                resultSet.getString("nacionalidad"),
+	                                resultSet.getString("telefono"),
+	                                resultSet.getInt("id_reserva")));
+	                    }
+	                }
+	            }
+	        } catch (SQLException e) {
+	            throw new RuntimeException(e);
+	        }
+
+	        return resultado;
+	    }
+	 
+	 public int editar(String nombre, String apellido,String fechaNacimiento, String nacionalidad, String telefono, Integer idHuesped) {
+	        try {
+	            final PreparedStatement statement = con.prepareStatement(
+	                    "UPDATE huespedes SET "
+	                    + " nombre = ?, "
+	                    + " apellido = ?,"
+	                    + " fecha_de_nacimiento = ?,"
+	                    + " nacionalidad = ?,"
+	                    + " telefono = ?"
+	                 
+	                    + " WHERE id = ?");
+
+	            try (statement) {
+	                statement.setString(1, nombre);
+	                statement.setString(2, apellido);
+	                statement.setString(3, fechaNacimiento);
+	                statement.setString(4, nacionalidad);
+	                statement.setString(5, telefono);
+	                statement.setInt(6, idHuesped);
+	                statement.execute();
+
+	                int updateCount = statement.getUpdateCount();
+
+	                return updateCount;
+	            }
+	        } catch (SQLException e) {
+	            throw new RuntimeException(e);
+	        }
+	    }
+	 public void resetAutoIncrement() {
+		 try {
+	            final PreparedStatement statement = con.prepareStatement("ALTER TABLE huespedes AUTO_INCREMENT=1;");
+	            try (statement) {	                
+	                statement.execute();
+	            }
+	        } catch (SQLException e) {
+	            throw new RuntimeException(e);
+	        }
+	 }
+	 
+	 public List<Huesped> listar(String textoABuscar) {
+	        List<Huesped> resultado = new ArrayList<>();
+
+	        try {
+	            String sql = "SELECT id, nombre, apellido, fecha_de_nacimiento, nacionalidad, telefono, id_reserva "
+	            + " FROM huespedes WHERE apellido = ? OR id_reserva = ?";
+	           
+	            
+	            final PreparedStatement statement = con.prepareStatement(
+	                    sql);
+	    
+	            try (statement) {
+	                statement.setString(1, textoABuscar);
+	                statement.setString(2, textoABuscar);
+	                statement.execute();
+	    
+	                final ResultSet resultSet = statement.getResultSet();
+	    
+	                try (resultSet) {
+	                    while (resultSet.next()) {
+	                        resultado.add(new Huesped(
+	                                resultSet.getInt("id"),
+	                                resultSet.getString("nombre"),
+	                                resultSet.getString("apellido"),
+	                                resultSet.getString("fecha_de_nacimiento"),
+	                                resultSet.getString("nacionalidad"),
+	                                resultSet.getString("telefono"),
+	                                resultSet.getInt("id_reserva")));
+	                    }
+	                }
+	            }
+	        } catch (SQLException e ) {
+	            throw new RuntimeException(e);
+	        }
+
+	        return resultado;
+	    }
+
 }

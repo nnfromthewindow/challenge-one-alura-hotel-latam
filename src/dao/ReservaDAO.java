@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Huesped;
 import model.Reserva;
 
 public class ReservaDAO {
@@ -50,6 +51,51 @@ public class ReservaDAO {
 		}
 	}
 	
+	 public int borrarReserva(Integer id) {
+	        try {
+	            final PreparedStatement statement = con.prepareStatement("DELETE FROM reservas WHERE ID = ?");
+
+	            try (statement) {
+	                statement.setInt(1, id);
+	                statement.execute();
+
+	                int updateCount = statement.getUpdateCount();
+
+	                return updateCount;
+	            }
+	        } catch (SQLException e) {
+	            throw new RuntimeException(e);
+	        }
+	    }
+	 
+	 public int editar(String fechaEntrada, String FechaSalida,String valor, String formaPago) {
+	        try {
+	            final PreparedStatement statement = con.prepareStatement(
+	                    "UPDATE reservas SET "
+	                    + " fecha_entrada = ?, "
+	                    + " fecha_salida = ?,"
+	                    + " valor = ?,"
+	                    + " forma_pago = ?"
+	             	                 
+	                    + " WHERE id = ?");
+
+	            try (statement) {
+	                statement.setString(1, fechaEntrada);
+	                statement.setString(2, FechaSalida);
+	                statement.setString(3, valor);
+	                statement.setString(4, formaPago);
+	                statement.execute();
+
+	                int updateCount = statement.getUpdateCount();
+
+	                return updateCount;
+	            }
+	        } catch (SQLException e) {
+	            throw new RuntimeException(e);
+	        }
+	    }
+	
+	
 	 public List<Reserva> listar() {
 	        List<Reserva> resultado = new ArrayList<>();
 
@@ -74,6 +120,44 @@ public class ReservaDAO {
 	                }
 	            }
 	        } catch (SQLException e) {
+	            throw new RuntimeException(e);
+	        }
+
+	        return resultado;
+	    }
+	 
+	 public List<Reserva> listar(String textoABuscar) {
+	        List<Reserva> resultado = new ArrayList<>();
+
+	        try {
+	            String sql = "SELECT id, fecha_entrada, fecha_salida, valorToString, forma_pago"
+	            + " FROM reservas WHERE id = ? OR ? >= fecha_entrada AND ? <= fecha_salida";
+	           
+	            
+	            final PreparedStatement statement = con.prepareStatement(
+	                    sql);
+	    
+	            try (statement) {
+	                statement.setString(1, textoABuscar);
+	                statement.setString(2, textoABuscar);
+	                statement.setString(3, textoABuscar);
+	                statement.execute();
+	    
+	                final ResultSet resultSet = statement.getResultSet();
+	    
+	                try (resultSet) {
+	                    while (resultSet.next()) {
+	                        resultado.add(new Reserva(
+	                                resultSet.getInt("id"),
+	                                resultSet.getString("fecha_entrada"),
+	                                resultSet.getString("fecha_salida"),
+	                                resultSet.getString("valorToString"),
+	                                resultSet.getInt("forma_pago")
+	                               ));
+	                    }
+	                }
+	            }
+	        } catch (SQLException e ) {
 	            throw new RuntimeException(e);
 	        }
 

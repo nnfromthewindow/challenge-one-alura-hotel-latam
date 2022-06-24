@@ -11,7 +11,7 @@ public class Reserva {
 	private Long valor;
 	
 	private String valorToString;
-	
+
 	private Integer formaPago;
 	
 	public Reserva(String checkin, String checkout, Long valor, Integer formaPago) {
@@ -70,6 +70,13 @@ public class Reserva {
 	public void setFormaPago(Integer formaPago) {
 		this.formaPago = formaPago;
 	}
+	
+	public String getValorToString() {
+		return valorToString;
+	}
 
+	public void setValorToString(String valorToString) {
+		this.valorToString = valorToString;
+	}
 	
 }
