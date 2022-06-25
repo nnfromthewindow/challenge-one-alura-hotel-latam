@@ -65,6 +65,36 @@ private Connection con;
 	        }
 	    }
 
+	 public int editar(String nombre, String apellido,String fechaNacimiento, String nacionalidad, String telefono, Integer idHuesped) {
+	        try {
+	            final PreparedStatement statement = con.prepareStatement(
+	                    "UPDATE huespedes SET "
+	                    + " nombre = ?, "
+	                    + " apellido = ?,"
+	                    + " fecha_de_nacimiento = ?,"
+	                    + " nacionalidad = ?,"
+	                    + " telefono = ?"
+	                 
+	                    + " WHERE id = ?");
+
+	            try (statement) {
+	                statement.setString(1, nombre);
+	                statement.setString(2, apellido);
+	                statement.setString(3, fechaNacimiento);
+	                statement.setString(4, nacionalidad);
+	                statement.setString(5, telefono);
+	                statement.setInt(6, idHuesped);
+	                statement.execute();
+
+	                int updateCount = statement.getUpdateCount();
+
+	                return updateCount;
+	            }
+	        } catch (SQLException e) {
+	            throw new RuntimeException(e);
+	        }
+	    }
+	 
 	 public List<Huesped> listar() {
 	        List<Huesped> resultado = new ArrayList<>();
 
@@ -97,45 +127,6 @@ private Connection con;
 	        return resultado;
 	    }
 	 
-	 public int editar(String nombre, String apellido,String fechaNacimiento, String nacionalidad, String telefono, Integer idHuesped) {
-	        try {
-	            final PreparedStatement statement = con.prepareStatement(
-	                    "UPDATE huespedes SET "
-	                    + " nombre = ?, "
-	                    + " apellido = ?,"
-	                    + " fecha_de_nacimiento = ?,"
-	                    + " nacionalidad = ?,"
-	                    + " telefono = ?"
-	                 
-	                    + " WHERE id = ?");
-
-	            try (statement) {
-	                statement.setString(1, nombre);
-	                statement.setString(2, apellido);
-	                statement.setString(3, fechaNacimiento);
-	                statement.setString(4, nacionalidad);
-	                statement.setString(5, telefono);
-	                statement.setInt(6, idHuesped);
-	                statement.execute();
-
-	                int updateCount = statement.getUpdateCount();
-
-	                return updateCount;
-	            }
-	        } catch (SQLException e) {
-	            throw new RuntimeException(e);
-	        }
-	    }
-	 public void resetAutoIncrement() {
-		 try {
-	            final PreparedStatement statement = con.prepareStatement("ALTER TABLE huespedes AUTO_INCREMENT=1;");
-	            try (statement) {	                
-	                statement.execute();
-	            }
-	        } catch (SQLException e) {
-	            throw new RuntimeException(e);
-	        }
-	 }
 	 
 	 public List<Huesped> listar(String textoABuscar) {
 	        List<Huesped> resultado = new ArrayList<>();
@@ -174,5 +165,17 @@ private Connection con;
 
 	        return resultado;
 	    }
+	 
+	 
+	 public void resetAutoIncrement() {
+		 try {
+	            final PreparedStatement statement = con.prepareStatement("ALTER TABLE huespedes AUTO_INCREMENT=1;");
+	            try (statement) {	                
+	                statement.execute();
+	            }
+	        } catch (SQLException e) {
+	            throw new RuntimeException(e);
+	        }
+	 }
 
 }

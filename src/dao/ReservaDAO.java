@@ -114,7 +114,7 @@ public class ReservaDAO {
 	                                resultSet.getInt("id"),
 	                                resultSet.getString("fecha_entrada"),
 	                                resultSet.getString("fecha_salida"),
-	                                resultSet.getString("valorToString"),
+	                                resultSet.getString("valor"),
 	                                resultSet.getInt("forma_pago")));
 	                    }
 	                }

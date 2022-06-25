@@ -1,5 +1,7 @@
 package model;
 
+import java.text.DecimalFormat;
+
 public class Reserva {
 
 	private Integer idReserva;
@@ -21,7 +23,8 @@ public class Reserva {
 		this.formaPago = formaPago;
 	}
 	
-	public Reserva(int id, String checkin, String checkout, String valorToString, Integer formaPago) {
+	public Reserva(Integer idReserva, String checkin, String checkout, String valorToString, Integer formaPago) {
+		this.idReserva= idReserva;
 		this.checkin = checkin;
 		this.checkout = checkout;
 		this.valorToString = valorToString;
@@ -72,6 +75,10 @@ public class Reserva {
 	}
 	
 	public String getValorToString() {
+		String pattern = "###,###,###";
+	    DecimalFormat myFormatter = new DecimalFormat(pattern);
+	    String output = myFormatter.format(Double.valueOf(valorToString));
+	    valorToString= "$"+" "+output;
 		return valorToString;
 	}
 

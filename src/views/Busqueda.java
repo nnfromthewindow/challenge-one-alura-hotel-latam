@@ -5,11 +5,14 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
 import controller.HuespedController;
 import controller.ReservaController;
 import model.Huesped;
+import model.Reserva;
 
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -47,6 +50,7 @@ public class Busqueda extends JFrame {
 	private DefaultTableModel modeloReserva;
 	private ReservaController reservaController;
 	private HuespedController huespedController;
+	private int tab;
 
 	/**
 	 * Launch the application.
@@ -168,7 +172,7 @@ public class Busqueda extends JFrame {
 		modeloHuesped.addColumn("Id Reserva");
 		
 		cargarTablaHuespedes();
-		List<Huesped>listaInicial=tablaInicial();
+		List<Huesped>listaInicialHuespedes=tablaInicialHuespedes();
 		
 		tbReservas = new JTable();
 		tbReservas.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -179,13 +183,29 @@ public class Busqueda extends JFrame {
 		modeloReserva.addColumn("Fecha Salida");
 		modeloReserva.addColumn("Valor");
 		modeloReserva.addColumn("Forma de pago");		
+		cargarTablaReservas();
+		List<Reserva>listaInicialReservas=tablaInicialReservas();
 		
 		JButton btnEliminar = new JButton("");
 		btnEliminar.setIcon(new ImageIcon(Busqueda.class.getResource("/imagenes/deletar.png")));
 		btnEliminar.setBackground(SystemColor.menu);
 		btnEliminar.setBounds(651, 416, 54, 41);
 		contentPane.add(btnEliminar);
-		btnEliminar.addActionListener(new ActionListener() {
+		
+		
+		
+		panel.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				
+				setTab(panel.getSelectedIndex());
+				//System.out.println(tab);
+			}
+			
+		});
+		switch(tab) {
+		case 0:	btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar al huésped?", "¿Eliminar Huésped?", JOptionPane.YES_NO_OPTION);
@@ -199,6 +219,41 @@ public class Busqueda extends JFrame {
 				
 			}
 			});
+		break;
+		case 1: btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar la reserva?", "¿Eliminar reserva?", JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.YES_OPTION) {
+					 //eliminarReserva();
+				System.out.println("RESERVA ELIMINADA");
+				   } else {
+				    JOptionPane.showMessageDialog(null, "Se cancelo la eliminación de la reserva");
+				   
+				}
+				
+			}
+			});
+		}
+//		
+//		if(panel.getSelectedIndex()==0) {
+//			btnEliminar.addActionListener(new ActionListener() {
+//				public void actionPerformed(ActionEvent e) {
+//					
+//					int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar al huésped?", "¿Eliminar Huésped?", JOptionPane.YES_NO_OPTION);
+//					if (reply == JOptionPane.YES_OPTION) {
+//						 eliminarHuesped();
+//					
+//					   } else {
+//					    JOptionPane.showMessageDialog(null, "Se cancelo la eliminación del huésped");
+//					   
+//					}
+//					
+//				}
+//				});
+//		};
+		
+		
 		
 		JButton btnCancelar = new JButton("");
 		btnCancelar.setIcon(new ImageIcon(Busqueda.class.getResource("/imagenes/cancelar.png")));
@@ -212,7 +267,7 @@ public class Busqueda extends JFrame {
 					 huespedController.borrarLista();
 					 limpiarTablaHuesped();
 					 huespedController.resetAutoIncrement();
-					 huespedController.listaInicial(listaInicial);
+					 huespedController.listaInicial(listaInicialHuespedes);
 					 cargarTablaHuespedes();
 				   } ;
 				
@@ -228,7 +283,8 @@ public class Busqueda extends JFrame {
 		setResizable(false);
 	}
 	
-	 private void cargarTablaHuespedes() {
+
+	private void cargarTablaHuespedes() {
 	        var huespedes = this.huespedController.listar();
 
 	        huespedes.forEach(huesped -> modeloHuesped.addRow(
@@ -241,10 +297,30 @@ public class Busqueda extends JFrame {
 	                        huesped.getTelefono(),
 	                        huesped.getIdReserva() }));
 	    }
+	 
+	 private void cargarTablaReservas() {
+	        var reservas = this.reservaController.listar();
+
+	        reservas.forEach(reserva -> modeloReserva.addRow(
+	                new Object[] {
+	                		reserva.getIdReserva(),
+	                		reserva.getCheckin(),
+	                		reserva.getCheckout(),
+	                		reserva.getValorToString(),
+	                		reserva.getFormaPago()})
+	       );
+	    }
 	 	
-	 private List<Huesped> tablaInicial(){
+	 	
+	 private List<Huesped> tablaInicialHuespedes(){
 		 List<Huesped>result = new ArrayList<>();
 		 result = this.huespedController.listar();
+		 return result;
+	 }
+	 
+	 private List<Reserva> tablaInicialReservas(){
+		 List<Reserva>result = new ArrayList<>();
+		 result = this.reservaController.listar();
 		 return result;
 	 }
 	 
@@ -302,7 +378,7 @@ public class Busqueda extends JFrame {
 
 	    private void eliminarHuesped() {
 	        if (sinSeleccionFilaHuesped()) {
-	            JOptionPane.showMessageDialog(this, "Por favor, elije una reser");
+	            JOptionPane.showMessageDialog(this, "Por favor, elije una reserva");
 	            return;
 	        }
 
@@ -322,4 +398,8 @@ public class Busqueda extends JFrame {
 	    private void limpiarTablaHuesped() {
 	        modeloHuesped.getDataVector().clear();
 	    }
+	    
+		 public void setTab(int tab) {
+				this.tab = tab;
+			}
 }

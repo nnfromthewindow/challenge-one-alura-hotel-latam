@@ -1,12 +1,8 @@
 package controller;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
-
 import dao.ReservaDAO;
 import factory.ConnectionFactory;
-import model.Huesped;
 import model.Reserva;
 
 public class ReservaController {
