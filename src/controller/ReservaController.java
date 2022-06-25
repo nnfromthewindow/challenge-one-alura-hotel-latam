@@ -52,8 +52,8 @@ public class ReservaController {
 	    return lista;
 	}
 	
-	public int editar(String fechaEntrada, String FechaSalida,String valor, String formaPago) {
-        return reservaDao.editar(fechaEntrada, FechaSalida, valor, formaPago);
+	public int editar(Integer idReserva, String fechaEntrada, String FechaSalida,String valor, Integer formaPago) {
+        return reservaDao.editar(idReserva,fechaEntrada, FechaSalida, valor, formaPago);
     }
 	
 	public List<Reserva> listar(String textoABuscar) {

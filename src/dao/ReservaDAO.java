@@ -68,7 +68,7 @@ public class ReservaDAO {
 	        }
 	    }
 	 
-	 public int editar(String fechaEntrada, String FechaSalida,String valor, String formaPago) {
+	 public int editar(Integer idReserva, String fechaEntrada, String FechaSalida,String valor, Integer formaPago) {
 	        try {
 	            final PreparedStatement statement = con.prepareStatement(
 	                    "UPDATE reservas SET "
@@ -80,10 +80,11 @@ public class ReservaDAO {
 	                    + " WHERE id = ?");
 
 	            try (statement) {
-	                statement.setString(1, fechaEntrada);
-	                statement.setString(2, FechaSalida);
-	                statement.setString(3, valor);
-	                statement.setString(4, formaPago);
+	            	statement.setInt(1, idReserva);
+	                statement.setString(2, fechaEntrada);
+	                statement.setString(3, FechaSalida);
+	                statement.setString(4, valor);
+	                statement.setInt(5, formaPago);
 	                statement.execute();
 
 	                int updateCount = statement.getUpdateCount();

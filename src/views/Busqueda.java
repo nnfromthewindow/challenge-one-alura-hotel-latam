@@ -129,7 +129,14 @@ public class Busqueda extends JFrame {
 		contentPane.add(btnEditar);
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				editarHuesped();
+				
+				switch(tab) {
+				case 0:	editarHuesped();
+				break;
+				case 1:	editarReserva();
+				}
+				
+				
 			}
 			});
 
@@ -192,89 +199,89 @@ public class Busqueda extends JFrame {
 		btnEliminar.setBounds(651, 416, 54, 41);
 		contentPane.add(btnEliminar);
 		
-		
-		
+		//LISTENER DE TABLA CUANDO CAMBIAMOS DE PESTAÑA
 		panel.addChangeListener(new ChangeListener() {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				
 				setTab(panel.getSelectedIndex());
-				//System.out.println(tab);
+				System.out.println("tab: "+tab);
 			}
-			
 		});
-		switch(tab) {
-		case 0:	btnEliminar.addActionListener(new ActionListener() {
+		
+		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			
+				if(tab==0) {
 				
-				int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar al huésped?", "¿Eliminar Huésped?", JOptionPane.YES_NO_OPTION);
+					int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar al huésped?", "¿Eliminar Huésped?", JOptionPane.YES_NO_OPTION);
+				
 				if (reply == JOptionPane.YES_OPTION) {
-					 eliminarHuesped();
+					 
+					eliminarHuesped();
 				
 				   } else {
 				    JOptionPane.showMessageDialog(null, "Se cancelo la eliminación del huésped");
-				   
+				   };
 				}
 				
-			}
-			});
-		break;
-		case 1: btnEliminar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar la reserva?", "¿Eliminar reserva?", JOptionPane.YES_NO_OPTION);
-				if (reply == JOptionPane.YES_OPTION) {
-					 //eliminarReserva();
-				System.out.println("RESERVA ELIMINADA");
-				   } else {
-				    JOptionPane.showMessageDialog(null, "Se cancelo la eliminación de la reserva");
-				   
+				if(tab==1) {
+					
+					int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar la reserva?", "¿Eliminar reserva?", JOptionPane.YES_NO_OPTION);
+					
+					if (reply == JOptionPane.YES_OPTION) {
+						
+						eliminarReserva();
+					
+					   } else {
+					    JOptionPane.showMessageDialog(null, "Se cancelo la eliminación de la reserva");
+					}
 				}
-				
 			}
-			});
-		}
-//		
-//		if(panel.getSelectedIndex()==0) {
-//			btnEliminar.addActionListener(new ActionListener() {
-//				public void actionPerformed(ActionEvent e) {
-//					
-//					int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar al huésped?", "¿Eliminar Huésped?", JOptionPane.YES_NO_OPTION);
-//					if (reply == JOptionPane.YES_OPTION) {
-//						 eliminarHuesped();
-//					
-//					   } else {
-//					    JOptionPane.showMessageDialog(null, "Se cancelo la eliminación del huésped");
-//					   
-//					}
-//					
-//				}
-//				});
-//		};
-		
-		
+		});
 		
 		JButton btnCancelar = new JButton("");
 		btnCancelar.setIcon(new ImageIcon(Busqueda.class.getResource("/imagenes/cancelar.png")));
 		btnCancelar.setBackground(SystemColor.menu);
 		btnCancelar.setBounds(713, 416, 54, 41);
 		contentPane.add(btnCancelar);
+		
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int reply = JOptionPane.showConfirmDialog(null, "Está seguro que cancelar los cambios realizados?", "¿Cancelar cambios?", JOptionPane.YES_NO_OPTION);
-				if (reply == JOptionPane.YES_OPTION) {
-					 huespedController.borrarLista();
-					 limpiarTablaHuesped();
-					 huespedController.resetAutoIncrement();
-					 huespedController.listaInicial(listaInicialHuespedes);
-					 cargarTablaHuespedes();
-				   } ;
+				try {
+					if(tab==0) {
+						
+						int reply = JOptionPane.showConfirmDialog(null, "Está seguro que cancelar los cambios realizados en Huespedes?", "¿Cancelar cambios?", JOptionPane.YES_NO_OPTION);
+						
+						if (reply == JOptionPane.YES_OPTION) {
+							 huespedController.borrarLista();
+							 limpiarTablaHuesped();
+							 huespedController.listaInicial(listaInicialHuespedes);
+							 cargarTablaHuespedes();
+						} 
+					};
+					
+					if(tab==1) {
+						
+						int reply = JOptionPane.showConfirmDialog(null, "Está seguro que cancelar los cambios realizados en Reservas?", "¿Cancelar cambios?", JOptionPane.YES_NO_OPTION);
+						
+						if (reply == JOptionPane.YES_OPTION) {
+							 reservaController.borrarLista();
+							 limpiarTablaReserva();
+							 reservaController.listaInicial(listaInicialReservas);
+							 
+							 cargarTablaReservas();
+							// tbReservas.repaint();
+							 
+						} 
+					}
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
 				
 			}
 		});
-		
-		
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(Busqueda.class.getResource("/imagenes/Ha-100px.png")));
@@ -362,15 +369,15 @@ public class Busqueda extends JFrame {
 
 	        Optional.ofNullable(modeloReserva.getValueAt(tbReservas.getSelectedRow(), tbReservas.getSelectedColumn()))
 	                .ifPresentOrElse(fila -> {
-	                    int idHuesped = Integer.valueOf(modeloReserva.getValueAt(tbReservas.getSelectedRow(), 0).toString());
-	                    String nombre = (String) modeloReserva.getValueAt(tbReservas.getSelectedRow(), 1);
-	                    String apellido = (String) modeloReserva.getValueAt(tbReservas.getSelectedRow(), 2);
-	                    String fechaNacimiento = (String) modeloReserva.getValueAt(tbReservas.getSelectedRow(), 3);
-	                    String nacionalidad = (String) modeloReserva.getValueAt(tbReservas.getSelectedRow(), 4);
-	                    String telefono = (String) modeloReserva.getValueAt(tbReservas.getSelectedRow(), 5);
+	                    int idReserva = Integer.valueOf(modeloReserva.getValueAt(tbReservas.getSelectedRow(), 0).toString());
+	                    String fechaIngreso = (String) modeloReserva.getValueAt(tbReservas.getSelectedRow(), 1);
+	                    String fechaSalida = (String) modeloReserva.getValueAt(tbReservas.getSelectedRow(), 2);
+	                    String valor = (String) modeloReserva.getValueAt(tbReservas.getSelectedRow(), 3);
+	                    int formaPago = (Integer) modeloReserva.getValueAt(tbReservas.getSelectedRow(), 4);
+	                    
 
 	                    
-	                    var filasModificadas = this.huespedController.editar(nombre, apellido, fechaNacimiento, nacionalidad,telefono,idHuesped);
+	                    var filasModificadas = this.reservaController.editar(idReserva, fechaIngreso, fechaSalida, valor,formaPago);
 	                    
 	                    JOptionPane.showMessageDialog(this, String.format("%d reserva editada con éxito!", filasModificadas));
 	                }, () -> JOptionPane.showMessageDialog(this, "Por favor, elije una reserva"));
@@ -378,7 +385,7 @@ public class Busqueda extends JFrame {
 
 	    private void eliminarHuesped() {
 	        if (sinSeleccionFilaHuesped()) {
-	            JOptionPane.showMessageDialog(this, "Por favor, elije una reserva");
+	            JOptionPane.showMessageDialog(this, "Por favor, elije un huesped");
 	            return;
 	        }
 
@@ -395,8 +402,31 @@ public class Busqueda extends JFrame {
 	                }, () -> JOptionPane.showMessageDialog(this, "Por favor, elije un huesped"));
 	    }
 	    
+	    private void eliminarReserva() {
+	        if (sinSeleccionFilaReserva()) {
+	            JOptionPane.showMessageDialog(this, "Por favor, elije una reserva");
+	            return;
+	        }
+
+	        Optional.ofNullable(modeloReserva.getValueAt(tbReservas.getSelectedRow(), tbReservas.getSelectedColumn()))
+	                .ifPresentOrElse(fila -> {
+	                    Integer id = Integer.valueOf(modeloReserva.getValueAt(tbReservas.getSelectedRow(), 0).toString());
+
+	                    var filasModificadas = this.huespedController.borrarHuesped(id);
+
+	                    modeloReserva.removeRow(tbReservas.getSelectedRow());
+
+	                    JOptionPane.showMessageDialog(this,
+	                            String.format("%d reserva eliminada con éxito!", filasModificadas));
+	                }, () -> JOptionPane.showMessageDialog(this, "Por favor, elije una reserva"));
+	    }
+	    
 	    private void limpiarTablaHuesped() {
 	        modeloHuesped.getDataVector().clear();
+	    }
+	    
+	    private void limpiarTablaReserva() {
+	        modeloReserva.getDataVector().clear();
 	    }
 	    
 		 public void setTab(int tab) {
