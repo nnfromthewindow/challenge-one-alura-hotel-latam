@@ -95,6 +95,7 @@ public class Busqueda extends JFrame {
 		btnBuscar.setIcon(new ImageIcon(Busqueda.class.getResource("/imagenes/lupa2.png")));
 		btnBuscar.setBounds(815, 75, 54, 41);
 		contentPane.add(btnBuscar);
+		
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
@@ -212,9 +213,9 @@ public class Busqueda extends JFrame {
 		
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+			try {
 				if(tab==0) {
-				
+					
 					int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar al huésped?", "¿Eliminar Huésped?", JOptionPane.YES_NO_OPTION);
 				
 				if (reply == JOptionPane.YES_OPTION) {
@@ -238,6 +239,10 @@ public class Busqueda extends JFrame {
 					    JOptionPane.showMessageDialog(null, "Se cancelo la eliminación de la reserva");
 					}
 				}
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(null, "Elimine primero al huesped para eliminar la reserva");
+			}
+				
 			}
 		});
 		
@@ -277,7 +282,7 @@ public class Busqueda extends JFrame {
 						} 
 					}
 				} catch (Exception e2) {
-					// TODO: handle exception
+						// TODO: handle exception
 				}
 				
 			}
@@ -412,7 +417,7 @@ public class Busqueda extends JFrame {
 	                .ifPresentOrElse(fila -> {
 	                    Integer id = Integer.valueOf(modeloReserva.getValueAt(tbReservas.getSelectedRow(), 0).toString());
 
-	                    var filasModificadas = this.huespedController.borrarHuesped(id);
+	                    var filasModificadas = this.reservaController.borrarReserva(id);
 
 	                    modeloReserva.removeRow(tbReservas.getSelectedRow());
 
