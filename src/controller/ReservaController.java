@@ -59,4 +59,8 @@ public class ReservaController {
 	public List<Reserva> listar(String textoABuscar) {
         return reservaDao.listar(textoABuscar);
     }
+	
+	public void cancelarReserva() {
+		reservaDao.cancelarReserva();
+	}
 }

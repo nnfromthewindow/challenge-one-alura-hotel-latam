@@ -22,7 +22,7 @@ public class ReservaDAO {
 	
 	public void agregarReserva(Reserva reserva) {
 		try {
-			
+			con.setAutoCommit(false);
 			PreparedStatement statement;
 				statement = con.prepareStatement("INSERT INTO reservas(fecha_entrada, fecha_salida, valor, forma_pago)"+"VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 			
@@ -45,14 +45,17 @@ public class ReservaDAO {
 				            }
 					System.out.println("insertado con exito!!!");
 				        }
+				        con.commit();
 				}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+		
 	}
 	
 	 public int borrarReserva(Integer id) {
 	        try {
+	        	con.setAutoCommit(false);
 	            final PreparedStatement statement = con.prepareStatement("DELETE FROM reservas WHERE ID = ?");
 
 	            try (statement) {
@@ -80,11 +83,11 @@ public class ReservaDAO {
 	                    + " WHERE id = ?");
 
 	            try (statement) {
-	            	statement.setInt(1, idReserva);
-	                statement.setString(2, fechaEntrada);
-	                statement.setString(3, FechaSalida);
-	                statement.setString(4, valor);
-	                statement.setInt(5, formaPago);
+	            	statement.setString(1, fechaEntrada);
+	                statement.setString(2, FechaSalida);
+	                statement.setFloat(3, Float.parseFloat(valor.substring(2, valor.length()).replace(".", "")));
+	                statement.setInt(4, formaPago);
+	                statement.setInt(5, idReserva);
 	                statement.execute();
 
 	                int updateCount = statement.getUpdateCount();
@@ -164,5 +167,14 @@ public class ReservaDAO {
 
 	        return resultado;
 	    }
+	 
+	 public void cancelarReserva() {
+		 try {
+			con.rollback();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	 }
 
 }

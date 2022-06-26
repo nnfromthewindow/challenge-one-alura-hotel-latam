@@ -269,7 +269,7 @@ public class Reservas extends JFrame {
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("");
+		JLabel lblNewLabel = new JLabel(""); 
 		lblNewLabel.setBounds(0, -16, 500, 539);
 		panel_1.add(lblNewLabel);
 		lblNewLabel.setBackground(Color.WHITE);

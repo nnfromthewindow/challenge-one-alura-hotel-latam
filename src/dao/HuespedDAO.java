@@ -50,6 +50,7 @@ private Connection con;
 	
 	 public int borrarHuesped(Integer id) {
 	        try {
+	        	con.setAutoCommit(false);
 	            final PreparedStatement statement = con.prepareStatement("DELETE FROM huespedes WHERE ID = ?");
 
 	            try (statement) {
@@ -166,7 +167,6 @@ private Connection con;
 	        return resultado;
 	    }
 	 
-	 
 	 public void resetAutoIncrement() {
 		 try {
 	            final PreparedStatement statement = con.prepareStatement("ALTER TABLE huespedes AUTO_INCREMENT=1;");
@@ -176,6 +176,15 @@ private Connection con;
 	        } catch (SQLException e) {
 	            throw new RuntimeException(e);
 	        }
+	 }
+	 
+	 public void cancelarHuesped() {
+		 try {
+			con.rollback();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	 }
 
 }

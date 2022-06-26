@@ -53,5 +53,9 @@ public class HuespedController {
 	        return huespedDao.listar(textoABuscar);
 	    }
 	
+	public void cancelarHuesped() {
+		huespedDao.cancelarHuesped();
+	}
+	
 	
 }
