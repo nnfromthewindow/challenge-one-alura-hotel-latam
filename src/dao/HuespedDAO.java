@@ -47,10 +47,10 @@ private Connection con;
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	 public int borrarHuesped(Integer id) {
 	        try {
-	        	con.setAutoCommit(false);
+	        	//con.setAutoCommit(false);
 	            final PreparedStatement statement = con.prepareStatement("DELETE FROM huespedes WHERE ID = ?");
 
 	            try (statement) {

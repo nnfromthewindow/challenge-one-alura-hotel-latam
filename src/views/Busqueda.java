@@ -215,7 +215,7 @@ public class Busqueda extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			try {
 				if(tab==0) {
-					
+					tbHuespedes.repaint();
 					int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar al huésped?", "¿Eliminar Huésped?", JOptionPane.YES_NO_OPTION);
 				
 				if (reply == JOptionPane.YES_OPTION) {
@@ -226,14 +226,16 @@ public class Busqueda extends JFrame {
 				    JOptionPane.showMessageDialog(null, "Se cancelo la eliminación del huésped");
 				   };
 				}
-				
+			
 				if(tab==1) {
-					
+					tbReservas.repaint();
 					int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar la reserva?", "¿Eliminar reserva?", JOptionPane.YES_NO_OPTION);
 					
 					if (reply == JOptionPane.YES_OPTION) {
 						
 						eliminarReserva();
+						limpiarTablaHuesped();
+						cargarTablaHuespedes();
 						//tbHuespedes.repaint();
 					
 					   } else {
@@ -257,7 +259,7 @@ public class Busqueda extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if(tab==0) {
-						
+						//huespedController.cancelarHuesped();
 						tbHuespedes.repaint();
 						int reply = JOptionPane.showConfirmDialog(null, "Está seguro que cancelar los cambios realizados en Huespedes?", "¿Cancelar cambios?", JOptionPane.YES_NO_OPTION);
 						
@@ -270,6 +272,8 @@ public class Busqueda extends JFrame {
 					};
 					
 					if(tab==1) {
+						
+						//reservaController.cancelarReserva(); 
 						tbReservas.repaint();
 						int reply = JOptionPane.showConfirmDialog(null, "Está seguro que cancelar los cambios realizados en Reservas?", "¿Cancelar cambios?", JOptionPane.YES_NO_OPTION);
 						

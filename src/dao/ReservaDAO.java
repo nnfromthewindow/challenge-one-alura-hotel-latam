@@ -55,7 +55,7 @@ public class ReservaDAO {
 	
 	 public int borrarReserva(Integer id) {
 	        try {
-	        	con.setAutoCommit(false);
+	        	//con.setAutoCommit(false);
 	            final PreparedStatement statement = con.prepareStatement("DELETE FROM reservas WHERE ID = ?");
 
 	            try (statement) {
