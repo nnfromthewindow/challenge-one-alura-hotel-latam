@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.SQLException;
 import java.util.List;
 import dao.ReservaDAO;
 import factory.ConnectionFactory;
@@ -63,4 +64,8 @@ public class ReservaController {
 	public void cancelarReserva() {
 		reservaDao.cancelarReserva();
 	}
+	
+	public void commitReserva() {
+		reservaDao.commitReserva();
+	 }
 }

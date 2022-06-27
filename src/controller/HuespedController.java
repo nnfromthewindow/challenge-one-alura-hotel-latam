@@ -57,5 +57,8 @@ public class HuespedController {
 		huespedDao.cancelarHuesped();
 	}
 	
+	public void commitHuesped() {
+		huespedDao.commitHuesped();;
+	 }
 	
 }

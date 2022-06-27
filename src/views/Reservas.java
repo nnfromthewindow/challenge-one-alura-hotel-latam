@@ -105,9 +105,10 @@ public class Reservas extends JFrame {
 		
 		txtValor = new JTextField();
 		txtValor.setBounds(88, 303, 235, 33);
-		txtValor.setEnabled(false);
+		txtValor.setEditable(false);
 		panel.add(txtValor);
 		txtValor.setColumns(10);
+		txtValor.setForeground(new Color(0,0,255));
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Valor de la Reserva");
 		lblNewLabel_1_1_1.setBounds(88, 278, 133, 14);

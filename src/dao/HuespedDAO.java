@@ -50,7 +50,7 @@ private Connection con;
 
 	 public int borrarHuesped(Integer id) {
 	        try {
-	        	//con.setAutoCommit(false);
+	        	con.setAutoCommit(false);
 	            final PreparedStatement statement = con.prepareStatement("DELETE FROM huespedes WHERE ID = ?");
 
 	            try (statement) {
@@ -134,7 +134,7 @@ private Connection con;
 
 	        try {
 	            String sql = "SELECT id, nombre, apellido, fecha_de_nacimiento, nacionalidad, telefono, id_reserva "
-	            + " FROM huespedes WHERE apellido = ? OR id_reserva = ?";
+	            + " FROM huespedes WHERE apellido LIKE '%" + textoABuscar + "%' OR id_reserva = ?";
 	           
 	            
 	            final PreparedStatement statement = con.prepareStatement(
@@ -142,7 +142,7 @@ private Connection con;
 	    
 	            try (statement) {
 	                statement.setString(1, textoABuscar);
-	                statement.setString(2, textoABuscar);
+	               
 	                statement.execute();
 	    
 	                final ResultSet resultSet = statement.getResultSet();
@@ -180,7 +180,19 @@ private Connection con;
 	 
 	 public void cancelarHuesped() {
 		 try {
+			 if(con.getAutoCommit()==false) {
 			con.rollback();
+			 }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	 }
+	 public void commitHuesped() {
+		 try {
+			 if(con.getAutoCommit()==false) {
+				con.commit();
+			 }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

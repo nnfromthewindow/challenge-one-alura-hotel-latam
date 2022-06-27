@@ -55,7 +55,7 @@ public class ReservaDAO {
 	
 	 public int borrarReserva(Integer id) {
 	        try {
-	        	//con.setAutoCommit(false);
+	        	con.setAutoCommit(false);
 	            final PreparedStatement statement = con.prepareStatement("DELETE FROM reservas WHERE ID = ?");
 
 	            try (statement) {
@@ -134,7 +134,7 @@ public class ReservaDAO {
 	        List<Reserva> resultado = new ArrayList<>();
 
 	        try {
-	            String sql = "SELECT id, fecha_entrada, fecha_salida, valorToString, forma_pago"
+	            String sql = "SELECT id, fecha_entrada, fecha_salida, valor, forma_pago"
 	            + " FROM reservas WHERE id = ? OR ? >= fecha_entrada AND ? <= fecha_salida";
 	           
 	            
@@ -151,11 +151,12 @@ public class ReservaDAO {
 	    
 	                try (resultSet) {
 	                    while (resultSet.next()) {
-	                        resultado.add(new Reserva(
+	                        
+							resultado.add(new Reserva(
 	                                resultSet.getInt("id"),
 	                                resultSet.getString("fecha_entrada"),
 	                                resultSet.getString("fecha_salida"),
-	                                resultSet.getString("valorToString"),
+	                                resultSet.getString("valor"),
 	                                resultSet.getInt("forma_pago")
 	                               ));
 	                    }
@@ -170,7 +171,21 @@ public class ReservaDAO {
 	 
 	 public void cancelarReserva() {
 		 try {
-			con.rollback();
+			 if(con.getAutoCommit()==false) {
+				 con.rollback();	 
+			 }
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	 }
+	 
+	 public void commitReserva() {
+		 try {
+			 if(con.getAutoCommit()==false) {
+				con.commit();
+			 }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
