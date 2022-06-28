@@ -68,4 +68,8 @@ public class ReservaController {
 	public void commitReserva() {
 		reservaDao.commitReserva();
 	 }
+	
+	public int valorReserva(int valor) {
+		return reservaDao.valorReserva(valor);
+	}
 }

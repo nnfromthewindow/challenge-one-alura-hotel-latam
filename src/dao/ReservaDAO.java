@@ -135,7 +135,7 @@ public class ReservaDAO {
 
 	        try {
 	            String sql = "SELECT id, fecha_entrada, fecha_salida, valor, forma_pago"
-	            + " FROM reservas WHERE id = ? OR ? >= fecha_entrada AND ? <= fecha_salida";
+	            + " FROM reservas WHERE id = ? ";
 	           
 	            
 	            final PreparedStatement statement = con.prepareStatement(
@@ -143,8 +143,6 @@ public class ReservaDAO {
 	    
 	            try (statement) {
 	                statement.setString(1, textoABuscar);
-	                statement.setString(2, textoABuscar);
-	                statement.setString(3, textoABuscar);
 	                statement.execute();
 	    
 	                final ResultSet resultSet = statement.getResultSet();
@@ -168,6 +166,29 @@ public class ReservaDAO {
 
 	        return resultado;
 	    }
+	 
+	 public int valorReserva(Integer valor) {
+		 try {
+	            final PreparedStatement statement = con.prepareStatement(
+	                    "UPDATE valor SET "
+	                    + " valor = ?"
+	             	                 
+	                    + " WHERE id = 1");
+
+	            try (statement) {
+	            	statement.setInt(1, valor);
+	                
+	                statement.execute();
+
+	                int updateCount = statement.getUpdateCount();
+
+	                return updateCount;
+	            }
+	        } catch (SQLException e) {
+	            throw new RuntimeException(e);
+	        }
+
+	 }
 	 
 	 public void cancelarReserva() {
 		 try {

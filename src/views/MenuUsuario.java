@@ -78,7 +78,7 @@ public class MenuUsuario extends JFrame {
 		panel_1.setBounds(0, 470, 894, 30);
 		contentPane.add(panel_1);
 		
-		JLabel lblNewLabel_3 = new JLabel("Desarrollado por Fulanita de Tal © 2022");
+		JLabel lblNewLabel_3 = new JLabel("Desarrollado por Nicolás Nuccelli © 2022");
 		lblNewLabel_3.setForeground(new Color(12, 138, 199));
 		lblNewLabel_3.setFont(new Font("Arial", Font.PLAIN, 13));
 		panel_1.add(lblNewLabel_3);
@@ -122,5 +122,21 @@ public class MenuUsuario extends JFrame {
 		btnBusqueda.setBackground(Color.WHITE);
 		btnBusqueda.setBounds(741, 302, 71, 73);
 		contentPane.add(btnBusqueda);
+		
+		JButton btnConfig = new JButton("");
+		btnConfig.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Configuracion config = new Configuracion();
+				config.setVisible(true);
+				dispose();
+			}
+		});
+		btnConfig.setIcon(new ImageIcon(MenuUsuario.class.getResource("/imagenes/config_32px.png")));
+		btnConfig.setForeground(Color.WHITE);
+		btnConfig.setBackground(Color.WHITE);
+		btnConfig.setBounds(700, 411, 50, 47);
+		contentPane.add(btnConfig);
+	
+	
 	}
 }
