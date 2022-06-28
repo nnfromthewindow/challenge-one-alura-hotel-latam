@@ -43,7 +43,7 @@ public class Reservas extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtValor;
 	private ReservaController reservaController;
-	private int valorDia =7500;
+	private int valorDia ;
 
 	/**
 	 * Launch the application.
@@ -65,6 +65,9 @@ public class Reservas extends JFrame {
 	 * Create the frame.
 	 */
 	public Reservas() {
+		this.reservaController = new ReservaController();
+		valorDia = Integer.valueOf(reservaController.getValorReserva()) ;
+		System.out.println(valorDia);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Reservas.class.getResource("/imagenes/calendario.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 540);

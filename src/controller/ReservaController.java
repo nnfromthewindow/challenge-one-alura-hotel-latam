@@ -72,4 +72,8 @@ public class ReservaController {
 	public int valorReserva(int valor) {
 		return reservaDao.valorReserva(valor);
 	}
+	
+	public String getValorReserva() {
+		return reservaDao.getValorReserva();
+	}
 }

@@ -104,6 +104,10 @@ public class ReservaDAO {
 	        List<Reserva> resultado = new ArrayList<>();
 
 	        try {
+	        	
+//	        	String sql = "SELECT r.id, r.fecha_entrada, r.fecha_salida, r.valor, fp.nombre "
+//	                    + " FROM reservas r INNER JOIN formas_de_pago fp "
+//	                    + " ON r.forma_pago = fp.id";
 	            final PreparedStatement statement = con
 	                    .prepareStatement("SELECT id, fecha_entrada, fecha_salida, valor, forma_pago FROM reservas");
 	    
@@ -212,5 +216,34 @@ public class ReservaDAO {
 			e.printStackTrace();
 		}
 	 }
+	 public String getValorReserva() {
+		
+		 String valor= "";
+
+		        try {
+		            final PreparedStatement statement = con
+		                    .prepareStatement("SELECT valor FROM valor");
+		    
+		            try (statement) {
+		                statement.execute();
+		    
+		                final ResultSet resultSet = statement.getResultSet();
+		    
+		                try (resultSet) {
+		                    while (resultSet.next()) {
+		                      
+		                       valor= String.valueOf(resultSet.getInt("valor")); 
+		                                
+		                    }
+		                }
+		            }
+		        } catch (SQLException e) {
+		            throw new RuntimeException(e);
+		        }
+
+		        return valor;
+		    }
+		 
+	
 
 }
