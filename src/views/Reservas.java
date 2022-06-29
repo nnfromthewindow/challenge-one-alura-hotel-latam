@@ -25,8 +25,6 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -140,14 +138,13 @@ public class Reservas extends JFrame {
 		lblNewLabel_4.setFont(new Font("Arial", Font.BOLD, 20));
 		panel.add(lblNewLabel_4);
 		
-		
-    
-       
+		//CREAMOS VARIABLE DATE PARA TENER REFERENCIA A LA FECHA DE HOY
 		Date hoy = new Date();
+		
+		//SETEAMOS LA FECHA MINIMA DE ENTRADA PARA BLOQUEAR FECHAS ANTERIORES A HOY
 		txtFechaE.getJCalendar().setMinSelectableDate(hoy);
-		//txtFechaE.getJCalendar().setMinSelectableDate(hoy);
-		//txtFechaS.getJCalendar().setMinSelectableDate(mañana);
-	
+		
+		//CREAMOS LISTENERS EN AMBOS CALENDARIOS PARA QUE CUANDO HAYA UN CAMBIO DE FECHA CALCULE AUTOMATICAMENTE EL PRECIO TOTAL
 		txtFechaE.getDateEditor().addPropertyChangeListener(
 				new PropertyChangeListener() {
 					
@@ -178,12 +175,13 @@ public class Reservas extends JFrame {
 								  	    
 							}
 						} catch (Exception e2) {
-					
+							throw new RuntimeException(e2);
 						}
 					
 					}
 				}
 				);
+		
 		txtFechaS.getDateEditor().addPropertyChangeListener(
 				new PropertyChangeListener() {
 					
@@ -214,7 +212,7 @@ public class Reservas extends JFrame {
 								
 							}  
 						} catch (Exception e2) {
-					
+							throw new RuntimeException(e2);
 						}
 					}
 				}
@@ -223,6 +221,9 @@ public class Reservas extends JFrame {
 		
 		
 		JButton btnReservar = new JButton("Continuar");
+	
+		//FUNCION BOTON RESERVAR CON SUS RESPECTIVAS VALIDACIONES
+		
 		btnReservar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -261,10 +262,7 @@ public class Reservas extends JFrame {
 						var reserva = new Reserva(fechaEntrada,fechaSalida,valorEstadiaParsed,formaPago);
 
 						reservaController.reservar(reserva);
-				
 
-						//JOptionPane.showMessageDialog(null, "Registro Exitoso!!!");
-						
 						RegistroHuesped huesped = new RegistroHuesped(reserva.getIdReserva());
 						huesped.setVisible(true);
 						dispose();
@@ -274,7 +272,7 @@ public class Reservas extends JFrame {
 					}
 				
 				} catch (Exception e2) {
-					
+					throw new RuntimeException(e2);
 				}
 			}
 		});

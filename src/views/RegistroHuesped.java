@@ -11,7 +11,6 @@ import com.toedter.calendar.JDateChooser;
 import controller.HuespedController;
 import controller.ReservaController;
 import model.Huesped;
-import model.Reserva;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -163,7 +162,7 @@ public class RegistroHuesped extends JFrame {
 		btnCancelar.setBounds(764, 543, 54, 41);
 		contentPane.add(btnCancelar);
 		
-		//FUNCION BOTON CANCELAR BORRA TODOS LOS CAMPOS DE INPUT
+		//FUNCION BOTON CANCELAR LA RESERVA
 		
 		btnCancelar.addActionListener(new ActionListener() {
 
@@ -179,15 +178,8 @@ public class RegistroHuesped extends JFrame {
 										
 					MenuUsuario usuario = new MenuUsuario();
 					usuario.setVisible(true);
-					dispose();
-					//reservaController.borrarReserva(Integer.valueOf(idReserva) ); 
-													 
+					dispose();													 
 				} 
-//				txtNombre.setText("");
-//				txtApellido.setText("");
-//				txtFechaN.cleanup();
-//				txtNacionalidad.setSelectedIndex(0);
-//				txtTelefono.setText("");	
 			}
 		});
 	
@@ -262,6 +254,9 @@ public class RegistroHuesped extends JFrame {
 		contentPane.add(btnGuardar);
 		
 		JButton btnSalir = new JButton("");
+		
+		//FUNCION BOTON SALIR NOS CONSULTA SI QUEREMOS SALIR SIN GUARDAR LA RESERVA, SI OPTAMOS POR SI, BORRA LA RESERVA
+		
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -275,7 +270,6 @@ public class RegistroHuesped extends JFrame {
 					MenuUsuario usuario = new MenuUsuario();
 					usuario.setVisible(true);
 					dispose();
-					//reservaController.borrarReserva(Integer.valueOf(idReserva) ); 
 													 
 				} 
 				
@@ -315,9 +309,7 @@ public class RegistroHuesped extends JFrame {
 		lblNewLabel_1_2_1.setBounds(578, 455, 253, 14);
 		lblNewLabel_1_2_1.setText("Id Reserva");
 		contentPane.add(lblNewLabel_1_2_1);
-		
-	
-		
+				
 		txtNreserva = new JTextField();
 		txtNreserva.setEditable(false);
 		txtNreserva.setForeground(new Color(220,0,0));
