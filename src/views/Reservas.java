@@ -175,7 +175,7 @@ public class Reservas extends JFrame {
 								  	    
 							}
 						} catch (Exception e2) {
-							throw new RuntimeException(e2);
+						
 						}
 					
 					}
@@ -212,7 +212,7 @@ public class Reservas extends JFrame {
 								
 							}  
 						} catch (Exception e2) {
-							throw new RuntimeException(e2);
+					
 						}
 					}
 				}

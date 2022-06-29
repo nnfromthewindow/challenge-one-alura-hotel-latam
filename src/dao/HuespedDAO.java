@@ -19,7 +19,7 @@ private Connection con;
 	
 	public void agregarHuesped(Huesped huesped) {
 		try {
-			//con.setAutoCommit(false);
+			
 			PreparedStatement statement;
 				statement = con.prepareStatement("INSERT INTO huespedes(nombre,apellido,fecha_de_nacimiento,nacionalidad,telefono,id_reserva)"+"VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 				try(statement) {
