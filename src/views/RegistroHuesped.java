@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import com.toedter.calendar.JDateChooser;
 import controller.HuespedController;
+import controller.ReservaController;
 import model.Huesped;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -16,14 +17,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import java.awt.HeadlessException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
@@ -41,6 +39,7 @@ public class RegistroHuesped extends JFrame {
 	private JTextField txtTelefono;
 	private JTextField txtNreserva;
 	private HuespedController huespedController;
+	private ReservaController reservaController;
 	private static int idReserva;
 	private static int idHuesped;
 
@@ -81,6 +80,7 @@ public class RegistroHuesped extends JFrame {
 	 */
 	public RegistroHuesped(int idReserva) {
 		
+		//CREAMOS LA CONECCION A LA CONECTION FACTORY
 		this.huespedController=new HuespedController();
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuesped.class.getResource("/imagenes/persona.png")));
@@ -91,8 +91,7 @@ public class RegistroHuesped extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
-		txtNombre
-		 = new JTextField();
+		txtNombre= new JTextField();
 		txtNombre.setBackground(Color.WHITE);
 		txtNombre.setColumns(10);
 		txtNombre.setBounds(576, 150, 255, 33);
@@ -108,8 +107,10 @@ public class RegistroHuesped extends JFrame {
 		txtFechaN.setBounds(576, 281, 255, 33);
 		contentPane.add(txtFechaN);
 		
-		//FILTRO DE EDAD PARA TOMAR RESERVAS
-		int edadMinima = 16;
+		//**-*-*-*-*-*-*-*-*-*-*-FILTRO DE EDAD PARA TOMAR RESERVAS*-*-*-*-**-*-*-*-*-*-//////////
+		//----------------------------------------------------------------------------------------
+		
+		int edadMinima = 16;	//ELIJA A PARTIR DE QUE EDAD TOMARA RESERVAS
 		Date hoy = new Date();
 		Calendar c = Calendar.getInstance();
 	    c.setTime(hoy);
@@ -117,7 +118,7 @@ public class RegistroHuesped extends JFrame {
 	    hoy = c.getTime();
 	    
 		txtFechaN.getJCalendar().setMaxSelectableDate(hoy);
-
+		//-----------------------------------------------------------------------------
 		
 		JComboBox txtNacionalidad = new JComboBox();
 		txtNacionalidad.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -157,6 +158,9 @@ public class RegistroHuesped extends JFrame {
 		btnCancelar.setBackground(SystemColor.menu);
 		btnCancelar.setBounds(764, 543, 54, 41);
 		contentPane.add(btnCancelar);
+		
+		//FUNCION BOTON CANCELAR BORRA TODOS LOS CAMPOS DE INPUT
+		
 		btnCancelar.addActionListener(new ActionListener() {
 
 			@Override
@@ -171,12 +175,13 @@ public class RegistroHuesped extends JFrame {
 		});
 	
 		JButton btnGuardar = new JButton("");
+		
+		//FUNCION BOTON GUARDAR
+		
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					String nacion = String.valueOf(txtNacionalidad.getSelectedItem());
-					
-				
+					//VALIDACION DE CAMPOS DE INPUT
 					if(	!txtNombre.getText().isBlank() &&
 						!txtApellido.getText().isBlank() &&
 						!txtTelefono.getText().isBlank() &&
@@ -206,6 +211,8 @@ public class RegistroHuesped extends JFrame {
 					
 					}else {
 						
+						//DETALLAMOS CADA ERROR DE VALIDACION CON UN MENSAJE PERSONALIZADO
+						
 						if(txtNombre.getText().isBlank() ||txtApellido.getText().isBlank() || !txtNombre.getText().matches("(^\\D{0,20})")|| !txtApellido.getText().matches("(^\\D{0,20})")) {
 							JOptionPane.showMessageDialog(null, "El nombre y apellido no puede estar en blanco y debe contener solo letras");	
 						}
@@ -223,7 +230,7 @@ public class RegistroHuesped extends JFrame {
 					}
 						}
 				 catch (Exception e2) {
-					
+					 throw new RuntimeException(e2);
 				}
 		}
 		});
@@ -235,11 +242,21 @@ public class RegistroHuesped extends JFrame {
 		JButton btnSalir = new JButton("");
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenuUsuario usuario = new MenuUsuario();
-				usuario.setVisible(true);
-				dispose();
+				
+				int reply = JOptionPane.showConfirmDialog(null, "Se eliminara la reserva, desea salir igual?", "¿Desea Salir?", JOptionPane.YES_NO_OPTION);
+				
+				if (reply == JOptionPane.YES_OPTION) {
+					MenuUsuario usuario = new MenuUsuario();
+					usuario.setVisible(true);
+					dispose();
+					//reservaController.borrarReserva(Integer.valueOf(idReserva) ); 
+													 
+				} 
+				
+				
 			}
 		});
+		
 		btnSalir.setIcon(new ImageIcon(RegistroHuesped.class.getResource("/imagenes/cerrar-sesion 32-px.png")));
 		btnSalir.setBackground(SystemColor.menu);
 		btnSalir.setBounds(828, 543, 54, 41);

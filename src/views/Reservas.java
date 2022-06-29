@@ -262,7 +262,6 @@ public class Reservas extends JFrame {
 
 						reservaController.reservar(reserva);
 				
-						System.out.println("El indice es: "+reserva.getIdReserva());
 
 						JOptionPane.showMessageDialog(null, "Registro Exitoso!!!");
 						
@@ -275,7 +274,7 @@ public class Reservas extends JFrame {
 					}
 				
 				} catch (Exception e2) {
-					// TODO: handle exception
+					
 				}
 			}
 		});

@@ -41,7 +41,7 @@ public class ReservaDAO {
 				                throw new SQLException("Fallo el registro, intente de nuevo");
 				            }
 				        }
-				        con.commit();
+				        //con.commit();
 				}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

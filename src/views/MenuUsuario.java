@@ -1,6 +1,5 @@
 package views;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -17,6 +16,10 @@ import java.awt.Toolkit;
 
 public class MenuUsuario extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**
@@ -122,6 +125,10 @@ public class MenuUsuario extends JFrame {
 		btnBusqueda.setBackground(Color.WHITE);
 		btnBusqueda.setBounds(741, 302, 71, 73);
 		contentPane.add(btnBusqueda);
+		
+	//ESTA SECCION FUE AGREGADA AL PROYECTO POR CUENTA MIA PARA PODER CONFIGURAR EL VALOR DIARIO DE LAS RESERVAS
+		
+		//FUNCION DEL BOTON CONFIGURAR, ACCEDE A LA CONFIGURACION DEL VALOR DIARIO DE LAS RESERVAS
 		
 		JButton btnConfig = new JButton("");
 		btnConfig.addActionListener(new ActionListener() {

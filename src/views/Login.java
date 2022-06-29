@@ -52,6 +52,7 @@ public class Login extends JFrame {
 	 */
 	public Login() {
 		
+		//CREAMOS LA CONECCION A LA CONECTION FACTORY
 		this.usuarioController = new UsuarioController();
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/imagenes/perfil-del-usuario.png")));
@@ -88,10 +89,11 @@ public class Login extends JFrame {
 		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setIcon(new ImageIcon(Login.class.getResource("/imagenes/perfil-del-usuario.png")));
+		
+		//FUNCION DEL BOTON DE LOGIN
+		
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
-				//System.out.println(txtUsuario.getText()+"-"+txtContrasena.getText());
 				var user = new Usuario(txtUsuario.getText(),txtContrasena.getText());
 				if(usuarioController.login(user)) {
 					JOptionPane.showMessageDialog(null, "Usuario y contraseña correctas!!");
@@ -107,6 +109,8 @@ public class Login extends JFrame {
 		});
 		btnLogin.setBounds(409, 322, 103, 33);
 		contentPane.add(btnLogin);
+		
+		//CREAMOS LISTENERS EN LOS DOS CAMPOS PARA HACER LOGIN AL PRESIONAR ENTER
 		
 		txtContrasena.addKeyListener(new KeyListener() {
 

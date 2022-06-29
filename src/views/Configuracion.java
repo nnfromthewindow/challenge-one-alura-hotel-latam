@@ -18,8 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
-import controller.HuespedController;
 import controller.ReservaController;
 
 public class Configuracion extends JDialog {
@@ -52,7 +50,10 @@ public class Configuracion extends JDialog {
 	 * Create the dialog.
 	 */
 	public Configuracion() {
+	
+	//ESTA SECCION FUE AGREGADA AL PROYECTO POR CUENTA MIA PARA PODER CONFIGURAR EL VALOR DIARIO DE LAS RESERVAS
 		
+		//CREAMOS LA CONECCION A LA CONECTION FACTORY
 		this.reservaController = new ReservaController();
 	
 			setIconImage(Toolkit.getDefaultToolkit().getImage(Configuracion.class.getResource("/imagenes/aH-40px.png")));
@@ -75,13 +76,12 @@ public class Configuracion extends JDialog {
 			lblNewLabel_1.setBounds(140, 22, 322, 21);
 			contentPanel.add(lblNewLabel_1);
 			
-			String valorReserva = reservaController.getValorReserva();
-			String pattern = "###,###,###";
-		    DecimalFormat myFormatter = new DecimalFormat(pattern);
-		    String output = myFormatter.format(Integer.valueOf(valorReserva));
-		  
 			
-			JLabel valorActual = new JLabel("$ "+output);
+			String valorReserva = reservaController.getValorReserva();
+			formatearValor(valorReserva);
+					  
+			
+			JLabel valorActual = new JLabel("$ "+valorReserva);
 			valorActual.setForeground(new Color (12, 138, 199));
 			valorActual.setFont(new Font("Arial", Font.BOLD, 18));
 			valorActual.setBounds(200, 50, 322, 21);
@@ -105,6 +105,8 @@ public class Configuracion extends JDialog {
 			
 			JButton okButton = new JButton("Guardar");
 			
+			//FUNCION DEL BOTON DE GUARDAR
+			
 			okButton.addActionListener(new ActionListener() {
 			
 				public void actionPerformed(ActionEvent e) {
@@ -124,6 +126,9 @@ public class Configuracion extends JDialog {
 			JButton cancelButton = new JButton("Salir");
 			cancelButton.setActionCommand("Salir");
 			buttonPane.add(cancelButton);
+			
+			//FUNCION BOTON SALIR
+			
 			cancelButton.addActionListener(new ActionListener() {
 			
 				@Override
@@ -137,6 +142,8 @@ public class Configuracion extends JDialog {
 				});
 			}
 			
+			//FUNCION PARA FORMATEAR EL STRING PARA AGREGAR LOS PUNTOS A LOS MILES
+	
 			public String formatearValor(String valor) {
 				String pattern = "###,###,###";
 			    DecimalFormat myFormatter = new DecimalFormat(pattern);

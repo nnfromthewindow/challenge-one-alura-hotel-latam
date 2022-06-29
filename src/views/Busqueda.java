@@ -71,9 +71,10 @@ public class Busqueda extends JFrame {
 	 */
 	public Busqueda() {
 		
+		//CREAMOS LAS CONECCIONES A LA CONECTION FACTORY
 		this.huespedController = new HuespedController();
 		this.reservaController = new ReservaController();
-	
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Busqueda.class.getResource("/imagenes/lupa2.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 516);
@@ -94,6 +95,7 @@ public class Busqueda extends JFrame {
 		btnBuscar.setBounds(815, 75, 54, 41);
 		contentPane.add(btnBuscar);
 		
+		//KEY LISTENER PARA QUE AL PRESIONAR LA TECLA ENTER REALICE LA BUSQUEDA HACIENDO doCLick() EN EL BOTON DE BUSQUEDA
 		
 		txtBuscar.addKeyListener(new KeyListener() {
 
@@ -119,7 +121,7 @@ public class Busqueda extends JFrame {
 		});
 		
 		
-		//LISTENER INPUT BUSQUEDA CUANDO BORRAS TODO REINICIA LA LISTA CON TODOS LOS REGISTROS
+		//LISTENER DEL INPUT BUSQUEDA CUANDO PARA QUE CUANDO SE BORRA TODO DESPUES DE BUSCAR REGISTROS, REINICIE LA LISTA CON LOS REGISTROS
 		
 		txtBuscar.addCaretListener(new CaretListener() {
 			
@@ -149,6 +151,7 @@ public class Busqueda extends JFrame {
 		});
 	
 		
+		//FUNCION DEL BOTON BUSCAR
 	
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -207,6 +210,9 @@ public class Busqueda extends JFrame {
 		btnEditar.setBackground(SystemColor.menu);
 		btnEditar.setBounds(587, 416, 54, 41);
 		contentPane.add(btnEditar);
+		
+		//FUNCION BOTON EDITAR
+		
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -227,6 +233,7 @@ public class Busqueda extends JFrame {
 		contentPane.add(lblNewLabel_4);
 		
 		  
+		//FUNCION DEL BOTON SALIR QUE REALIZA LOS COMMITS DE LOS REGISTROS QUE SE HAYAN BORRADO
 		
 		JButton btnSalir = new JButton("");
 		btnSalir.addActionListener(new ActionListener() {
@@ -268,10 +275,14 @@ public class Busqueda extends JFrame {
 		panel.setBounds(10, 127, 874, 265);
 		contentPane.add(panel);
 		
+		//AGREGAMOS UN JSCROLL PANE A NUESTRA TABLA HUESPEDES PARA PODER TENER FUNCIONES DE SCROLL EN LA TABLA
 		
 		tbHuespedes = new JTable(modeloHuesped);
 		JScrollPane scrollHuesped = new JScrollPane(tbHuespedes);
+		
+		// LE DAMOS COLOR DE BACKGROUND A LOS HEADERS DE LA TABLA
 		tbHuespedes.getTableHeader().setBackground(new Color(46, 126, 163));
+		
 		tbHuespedes.setFont(new Font("Arial", Font.PLAIN, 14));
 		panel.addTab("Huéspedes", new ImageIcon(Busqueda.class.getResource("/imagenes/persona.png")), scrollHuesped, null);
 		
@@ -288,9 +299,14 @@ public class Busqueda extends JFrame {
 		
 		cargarTablaHuespedes();
 		
+		//AGREGAMOS UN JSCROLL PANE A NUESTRA TABLA RESERVAS PARA PODER TENER FUNCIONES DE SCROLL EN LA TABLA
+		
 		tbReservas = new JTable(modeloReserva);
 		JScrollPane scrollReserva = new JScrollPane(tbReservas);
+		
+		// LE DAMOS COLOR DE BACKGROUND A LOS HEADERS DE LA TABLA
 		tbReservas.getTableHeader().setBackground(new Color(46, 126, 163));
+		
 		tbReservas.setFont(new Font("Arial", Font.PLAIN, 14));
 		panel.addTab("Reservas", new ImageIcon(Busqueda.class.getResource("/imagenes/calendario.png")), scrollReserva, null);
 		modeloReserva = (DefaultTableModel) tbReservas.getModel();
@@ -310,7 +326,7 @@ public class Busqueda extends JFrame {
 		contentPane.add(btnEliminar);
 		
 	
-		//LISTENER DE TABLA CUANDO CAMBIAMOS DE PESTAÑA
+		//LISTENER DE TABLA CUANDO CAMBIAMOS DE PESTAÑA PARA IDENTIFICAR EN QUE PESTAÑA ESTAMOS
 		panel.addChangeListener(new ChangeListener() {
 
 			@Override
@@ -321,6 +337,8 @@ public class Busqueda extends JFrame {
 				huespedController.cancelarHuesped();
 			}
 		});
+		
+		//FUNCION BOTON ELIMINAR, LOS COMMITS SE REALIZAN CON EL BOTON SALIR 
 		
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -361,6 +379,8 @@ public class Busqueda extends JFrame {
 		btnCancelar.setBackground(SystemColor.menu);
 		btnCancelar.setBounds(713, 416, 54, 41);
 		contentPane.add(btnCancelar);
+		
+		//FUNCION BOTON CANCELAR, HACE UN ROLLBACK PARA RESTABLECER LOS REGISTROS ELIMINADOS EN LA SESION
 		
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
