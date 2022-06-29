@@ -11,6 +11,8 @@ import com.toedter.calendar.JDateChooser;
 import controller.HuespedController;
 import controller.ReservaController;
 import model.Huesped;
+import model.Reserva;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
@@ -82,6 +84,8 @@ public class RegistroHuesped extends JFrame {
 		
 		//CREAMOS LA CONECCION A LA CONECTION FACTORY
 		this.huespedController=new HuespedController();
+		this.reservaController = new ReservaController();
+		reservaController.cancelarReserva();
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuesped.class.getResource("/imagenes/persona.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -166,11 +170,24 @@ public class RegistroHuesped extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				txtNombre.setText("");
-				txtApellido.setText("");
-				txtFechaN.cleanup();
-				txtNacionalidad.setSelectedIndex(0);
-				txtTelefono.setText("");	
+				int reply = JOptionPane.showConfirmDialog(null, "Desea cancelar la reserva?", "¿Cancelar Reserva?", JOptionPane.YES_NO_OPTION);
+				
+				if (reply == JOptionPane.YES_OPTION) {
+					
+					reservaController.borrarReserva(idReserva);
+					reservaController.commitReserva();
+										
+					MenuUsuario usuario = new MenuUsuario();
+					usuario.setVisible(true);
+					dispose();
+					//reservaController.borrarReserva(Integer.valueOf(idReserva) ); 
+													 
+				} 
+//				txtNombre.setText("");
+//				txtApellido.setText("");
+//				txtFechaN.cleanup();
+//				txtNacionalidad.setSelectedIndex(0);
+//				txtTelefono.setText("");	
 			}
 		});
 	
@@ -204,7 +221,12 @@ public class RegistroHuesped extends JFrame {
 								txtTelefono.getText(),
 								idReserva
 								);
+						
+						
 						huespedController.agregarHuesped(huesped);
+											
+						JOptionPane.showMessageDialog(null, "Registro Exitoso!!!");
+						
 						Exito exito = new Exito(huesped.getIdHuesped(),huesped.getIdReserva());
 						exito.setVisible(true);
 						dispose();
@@ -246,6 +268,10 @@ public class RegistroHuesped extends JFrame {
 				int reply = JOptionPane.showConfirmDialog(null, "Se eliminara la reserva, desea salir igual?", "¿Desea Salir?", JOptionPane.YES_NO_OPTION);
 				
 				if (reply == JOptionPane.YES_OPTION) {
+					
+					reservaController.borrarReserva(idReserva);
+					reservaController.commitReserva();
+					
 					MenuUsuario usuario = new MenuUsuario();
 					usuario.setVisible(true);
 					dispose();

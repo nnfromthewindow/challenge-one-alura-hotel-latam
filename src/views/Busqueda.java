@@ -453,19 +453,7 @@ public class Busqueda extends JFrame {
 	       );
 	    }
 	 	
-	 	
-	 private List<Huesped> tablaInicialHuespedes(){
-		 List<Huesped>result = new ArrayList<>();
-		 result = this.huespedController.listar();
-		 return result;
-	 }
-	 
-	 private List<Reserva> tablaInicialReservas(){
-		 List<Reserva>result = new ArrayList<>();
-		 result = this.reservaController.listar();
-		 return result;
-	 }
-	 
+
 	 	private boolean sinSeleccionFilaHuesped() {
 	 		return tbHuespedes.getSelectedRowCount() == 0 || tbHuespedes.getSelectedColumnCount() == 0;
 	    }

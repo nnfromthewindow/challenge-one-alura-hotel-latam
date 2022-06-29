@@ -19,7 +19,7 @@ public class ReservaDAO {
 
 	public void agregarReserva(Reserva reserva) {
 		try {
-			con.setAutoCommit(false);
+			//con.setAutoCommit(false);
 			PreparedStatement statement;
 				statement = con.prepareStatement("INSERT INTO reservas(fecha_entrada, fecha_salida, valor, forma_pago)"+"VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 			

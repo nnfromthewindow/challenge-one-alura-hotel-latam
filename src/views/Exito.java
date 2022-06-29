@@ -132,6 +132,7 @@ public class Exito extends JDialog {
 				public void actionPerformed(ActionEvent e) {
 						
 						huespedController.borrarHuesped(idHuesped);
+						huespedController.commitHuesped();
 						JOptionPane.showMessageDialog(null, "Huesped eliminado, intente ingresarlo nuevamente");
 						RegistroHuesped huesped = new RegistroHuesped(idReservaHuesped);
 						huesped.setVisible(true);

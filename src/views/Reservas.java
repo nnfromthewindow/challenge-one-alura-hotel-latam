@@ -263,7 +263,7 @@ public class Reservas extends JFrame {
 						reservaController.reservar(reserva);
 				
 
-						JOptionPane.showMessageDialog(null, "Registro Exitoso!!!");
+						//JOptionPane.showMessageDialog(null, "Registro Exitoso!!!");
 						
 						RegistroHuesped huesped = new RegistroHuesped(reserva.getIdReserva());
 						huesped.setVisible(true);
