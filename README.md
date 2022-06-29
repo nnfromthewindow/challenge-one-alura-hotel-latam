@@ -5,6 +5,31 @@
 </p>
 
 ---
+El sistema contiene un login que se conecta a la base de datos de mySQL para checkear si el usuario y la contraseña es valido
+
+![image](https://user-images.githubusercontent.com/97917996/176555322-fac30fda-6b25-4338-8f25-570b396ec255.png)
+
+A la pantalla principal de usuario se le agrego un boton de configuracion desde donde se puede editar el valor diario de las reservas
+
+![image](https://user-images.githubusercontent.com/97917996/176555460-d7977184-a9f1-44a9-8a37-a9e05fa93997.png)
+
+![image](https://user-images.githubusercontent.com/97917996/176555640-bb5d9255-7e3c-4c37-b794-1dcf6c80915f.png)
+
+A la seccion para agregar reservas se le agrego restricciones a los calendarios para que fechas anteriores al dia actual queden bloqueadas y la fecha de salida no pueda ser anterior a la fecha de entrada, ademas tienen listeners que detectan en cuanto hay un cambio de fecha calcula la diferencia de dias y nos muestra el valor total de la estadia en color azul. Por ultimo se agrego un boton para poder volver al menu de usuario.
+
+![image](https://user-images.githubusercontent.com/97917996/176556093-3150b817-756b-44bf-8c5c-25ed02ae2922.png)
+
+A la seccion para agregar al huesped que realizo la reserva se le incorporaron todas las validaciones a los campos y a su vez se incluyo un filtro de edad (editable dentro del codigo) para restringir la reserva a menores de 16 años. Tambien se modifico el campo de numero de reserva para que se muestre en color rojo.
+
+![image](https://user-images.githubusercontent.com/97917996/176556727-4a4cf4de-1f45-420d-9fb1-54645d644c8f.png)
+
+
+
+
+
+
+
+---
 ##  Primeros Pasos:
 
 #### 🔹 Marca este proyecto con una ⭐
