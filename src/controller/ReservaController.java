@@ -1,6 +1,5 @@
 package controller;
 
-import java.sql.SQLException;
 import java.util.List;
 import dao.ReservaDAO;
 import factory.ConnectionFactory;
@@ -15,7 +14,7 @@ public class ReservaController {
 		var factory = new ConnectionFactory();
 		this.reservaDao = new ReservaDAO(factory.abrirConexion());
 	};
-	
+
 	public void reservar(Reserva reserva) {
 		reservaDao.agregarReserva(reserva);
 		this.idReserva=reserva.getIdReserva();
@@ -36,7 +35,7 @@ public class ReservaController {
 	public Integer borrarReserva(Integer id) {
 		return reservaDao.borrarReserva(id);
 	}
-	
+
 	 
 	public List<Reserva> listaInicial(List<Reserva> lista) {
 		lista.forEach(reserva -> {
@@ -53,8 +52,19 @@ public class ReservaController {
 	    return lista;
 	}
 	
-	public int editar(Integer idReserva, String fechaEntrada, String FechaSalida,String valor, Integer formaPago) {
-        return reservaDao.editar(idReserva,fechaEntrada, FechaSalida, valor, formaPago);
+	public int editar(Integer idReserva, String fechaEntrada, String FechaSalida,String valor, String formaPagoString) {
+        int formaPago=0;
+        switch(formaPagoString) {
+        case "Tarjeta de Crédito": formaPago=1;
+        break;
+        case "Tarjeta de Débito": formaPago=2;
+        break;
+        case "Dinero en Efectivo": formaPago=3;
+        break;
+        
+        
+        };
+		return reservaDao.editar(idReserva,fechaEntrada, FechaSalida, valor, formaPago);
     }
 	
 	public List<Reserva> listar(String textoABuscar) {

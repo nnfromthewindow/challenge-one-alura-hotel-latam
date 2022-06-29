@@ -9,7 +9,7 @@ import model.Huesped;
 public class HuespedController {
 	
 	private HuespedDAO huespedDao;
-	
+
 	public HuespedController() {
 		var factory = new ConnectionFactory();
 		this.huespedDao = new HuespedDAO(factory.abrirConexion());

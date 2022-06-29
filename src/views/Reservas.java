@@ -25,6 +25,9 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JButton;
@@ -65,9 +68,11 @@ public class Reservas extends JFrame {
 	 * Create the frame.
 	 */
 	public Reservas() {
+		
 		this.reservaController = new ReservaController();
+		
 		valorDia = Integer.valueOf(reservaController.getValorReserva()) ;
-		System.out.println(valorDia);
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Reservas.class.getResource("/imagenes/calendario.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 540);
@@ -136,17 +141,29 @@ public class Reservas extends JFrame {
 		panel.add(lblNewLabel_4);
 		
 		
-		this.reservaController = new ReservaController();
-		
-		
+    
+       
+		Date hoy = new Date();
+		txtFechaE.getJCalendar().setMinSelectableDate(hoy);
+		//txtFechaE.getJCalendar().setMinSelectableDate(hoy);
+		//txtFechaS.getJCalendar().setMinSelectableDate(mañana);
+	
 		txtFechaE.getDateEditor().addPropertyChangeListener(
 				new PropertyChangeListener() {
-					
 					
 					@Override
 					public void propertyChange(PropertyChangeEvent e) {
 						try {
-							if("date".equals(e.getPropertyName()) && txtFechaS.getDate().compareTo(txtFechaE.getDate()) > 0 ) {
+							Date hoy = new Date(); 
+							Date mañana = txtFechaE.getDate();
+							Calendar c = Calendar.getInstance();
+						    c.setTime(mañana);
+						    c.add(Calendar.DATE, 1);
+						    mañana = c.getTime();
+							txtFechaE.getJCalendar().setMinSelectableDate(hoy);
+							txtFechaS.getJCalendar().setMinSelectableDate(mañana);
+							
+							if("date".equals(e.getPropertyName())) {
 						
 								    Date firstDate = txtFechaE.getDate();
 								    Date secondDate = txtFechaS.getDate();
@@ -158,10 +175,7 @@ public class Reservas extends JFrame {
 								    DecimalFormat myFormatter = new DecimalFormat(pattern);
 								    String output = myFormatter.format(value);
 								    txtValor.setText("$"+" "+output);
-								  
-								    
-							}else if("date".equals(e.getPropertyName()) && txtFechaS.getDate().getTime() < txtFechaE.getDate().getTime() ){
-								txtValor.setText("");
+								  	    
 							}
 						} catch (Exception e2) {
 					
@@ -173,11 +187,18 @@ public class Reservas extends JFrame {
 		txtFechaS.getDateEditor().addPropertyChangeListener(
 				new PropertyChangeListener() {
 					
-					
 					@Override
 					public void propertyChange(PropertyChangeEvent e) {
 						try {
-							if("date".equals(e.getPropertyName()) && txtFechaS.getDate().compareTo(txtFechaE.getDate()) > 0) {
+							
+							Date mañana = txtFechaE.getDate();
+							Calendar c = Calendar.getInstance();
+						    c.setTime(mañana);
+						    c.add(Calendar.DATE, 1);
+						    mañana = c.getTime();
+							txtFechaE.getJCalendar().setMinSelectableDate(hoy);
+							txtFechaS.getJCalendar().setMinSelectableDate(mañana);
+							if("date".equals(e.getPropertyName())) {
 						
 								Date firstDate = txtFechaE.getDate();
 							    Date secondDate = txtFechaS.getDate();
@@ -191,9 +212,7 @@ public class Reservas extends JFrame {
 							    txtValor.setText("$"+" "+output);
 		
 								
-							}else if("date".equals(e.getPropertyName()) && txtFechaS.getDate().getTime() < txtFechaE.getDate().getTime() ) {
-									txtValor.setText("");
-								}	  
+							}  
 						} catch (Exception e2) {
 					
 						}
@@ -261,11 +280,26 @@ public class Reservas extends JFrame {
 			}
 		});
 		btnReservar.setForeground(Color.WHITE);
-		btnReservar.setBounds(183, 436, 140, 33);
+		btnReservar.setBounds(220, 436, 140, 33);
 		btnReservar.setIcon(new ImageIcon(Reservas.class.getResource("/imagenes/calendario.png")));
 		btnReservar.setBackground(new Color(65,105,225));
 		btnReservar.setFont(new Font("Arial", Font.PLAIN, 14));
 		panel.add(btnReservar);
+		
+		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MenuUsuario usuario = new MenuUsuario();
+				usuario.setVisible(true);
+				dispose();
+			}
+		});
+		btnVolver.setForeground(Color.WHITE);
+		btnVolver.setBounds(40, 436, 140, 33);
+		btnVolver.setIcon(new ImageIcon(Reservas.class.getResource("/imagenes/calendario.png")));
+		btnVolver.setBackground(new Color(65,105,225));
+		btnVolver.setFont(new Font("Arial", Font.PLAIN, 14));
+		panel.add(btnVolver);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);

@@ -7,7 +7,7 @@ import model.Usuario;
 public class UsuarioController {
 	
 	private UsuarioDAO usuarioDao;
-	
+
 	public UsuarioController() {
 	        var factory = new ConnectionFactory();
 	        this.usuarioDao = new UsuarioDAO(factory.abrirConexion());

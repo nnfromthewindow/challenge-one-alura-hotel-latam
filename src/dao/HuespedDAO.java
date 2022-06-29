@@ -9,11 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Huesped;
 
-
 public class HuespedDAO {
 
 private Connection con;
-	
+
 	public HuespedDAO(Connection con) {
 		this.con = con;
 	}
@@ -184,8 +183,7 @@ private Connection con;
 			con.rollback();
 			 }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	 }
 	 public void commitHuesped() {
@@ -194,8 +192,7 @@ private Connection con;
 				con.commit();
 			 }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	 }
 

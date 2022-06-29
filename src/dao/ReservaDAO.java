@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import model.Huesped;
 import model.Reserva;
 
 public class ReservaDAO {
@@ -18,8 +16,7 @@ public class ReservaDAO {
 	public ReservaDAO(Connection con) {
 		this.con = con;
 	}
-	
-	
+
 	public void agregarReserva(Reserva reserva) {
 		try {
 			con.setAutoCommit(false);
@@ -43,7 +40,6 @@ public class ReservaDAO {
 				            else {
 				                throw new SQLException("Fallo el registro, intente de nuevo");
 				            }
-					System.out.println("insertado con exito!!!");
 				        }
 				        con.commit();
 				}
@@ -73,21 +69,22 @@ public class ReservaDAO {
 	 
 	 public int editar(Integer idReserva, String fechaEntrada, String FechaSalida,String valor, Integer formaPago) {
 	        try {
+	        	
 	            final PreparedStatement statement = con.prepareStatement(
+	            	
 	                    "UPDATE reservas SET "
 	                    + " fecha_entrada = ?, "
 	                    + " fecha_salida = ?,"
-	                    + " valor = ?,"
-	                    + " forma_pago = ?"
+	                    + " valor = ?"
 	             	                 
-	                    + " WHERE id = ?");
+	                    + " WHERE id = ?"
+	                    );
 
 	            try (statement) {
 	            	statement.setString(1, fechaEntrada);
 	                statement.setString(2, FechaSalida);
 	                statement.setFloat(3, Float.parseFloat(valor.substring(2, valor.length()).replace(".", "")));
-	                statement.setInt(4, formaPago);
-	                statement.setInt(5, idReserva);
+	                statement.setInt(4, idReserva);
 	                statement.execute();
 
 	                int updateCount = statement.getUpdateCount();
@@ -104,12 +101,8 @@ public class ReservaDAO {
 	        List<Reserva> resultado = new ArrayList<>();
 
 	        try {
-	        	
-//	        	String sql = "SELECT r.id, r.fecha_entrada, r.fecha_salida, r.valor, fp.nombre "
-//	                    + " FROM reservas r INNER JOIN formas_de_pago fp "
-//	                    + " ON r.forma_pago = fp.id";
 	            final PreparedStatement statement = con
-	                    .prepareStatement("SELECT id, fecha_entrada, fecha_salida, valor, forma_pago FROM reservas");
+	                    .prepareStatement("SELECT r.id, r.fecha_entrada, r.fecha_salida, r.valor, f.nombre FROM reservas r INNER JOIN formas_de_pago f ON r.forma_pago=f.id");
 	    
 	            try (statement) {
 	                statement.execute();
@@ -119,11 +112,11 @@ public class ReservaDAO {
 	                try (resultSet) {
 	                    while (resultSet.next()) {
 	                        resultado.add(new Reserva(
-	                                resultSet.getInt("id"),
-	                                resultSet.getString("fecha_entrada"),
-	                                resultSet.getString("fecha_salida"),
-	                                resultSet.getString("valor"),
-	                                resultSet.getInt("forma_pago")));
+	                                resultSet.getInt("r.id"),
+	                                resultSet.getString("r.fecha_entrada"),
+	                                resultSet.getString("r.fecha_salida"),
+	                                resultSet.getString("r.valor"),
+	                                resultSet.getString("f.nombre")));
 	                    }
 	                }
 	            }
@@ -201,8 +194,7 @@ public class ReservaDAO {
 			 }
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	 }
 	 
@@ -212,8 +204,7 @@ public class ReservaDAO {
 				con.commit();
 			 }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	 }
 	 public String getValorReserva() {
@@ -243,7 +234,4 @@ public class ReservaDAO {
 
 		        return valor;
 		    }
-		 
-	
-
 }

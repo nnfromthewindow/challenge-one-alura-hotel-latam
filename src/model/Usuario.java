@@ -1,9 +1,7 @@
 package model;
 
 public class Usuario {
-	
-	private Integer id;
-	
+
 	private String user;
 	
 	private String pass;

@@ -11,40 +11,27 @@ import javax.swing.event.CaretListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-
 import controller.HuespedController;
 import controller.ReservaController;
 import model.Huesped;
 import model.Reserva;
-
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.JButton;
-import javax.swing.AbstractListModel;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
-import java.awt.ScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.awt.event.ActionEvent;
-import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JDesktopPane;
 import java.awt.Toolkit;
 
 public class Busqueda extends JFrame {
@@ -239,18 +226,21 @@ public class Busqueda extends JFrame {
 		lblNewLabel_4.setBounds(155, 42, 258, 42);
 		contentPane.add(lblNewLabel_4);
 		
+		  
+		
 		JButton btnSalir = new JButton("");
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				int reply = JOptionPane.showConfirmDialog(null, "Desea guardar los cambios?", "¿Guardar cambios?", JOptionPane.YES_NO_OPTION);
-				
+				   
 				if (reply == JOptionPane.YES_OPTION) {
-					 
-				reservaController.commitReserva();
-				huespedController.commitHuesped();
+				
+					reservaController.commitReserva();
+					huespedController.commitHuesped();
+				
 				   } else {
-				    
+					
 				    huespedController.cancelarHuesped();
 					 limpiarTablaHuesped();
 					 cargarTablaHuespedes();
@@ -259,13 +249,15 @@ public class Busqueda extends JFrame {
 					 cargarTablaHuespedes();
 				   };
 				
-				
+			
 				
 				MenuUsuario usuario = new MenuUsuario();
 				usuario.setVisible(true);
 				dispose();
 			}
 		});
+		
+		
 		btnSalir.setIcon(new ImageIcon(Busqueda.class.getResource("/imagenes/cerrar-sesion 32-px.png")));
 		btnSalir.setForeground(Color.WHITE);
 		btnSalir.setBackground(Color.WHITE);
@@ -279,15 +271,13 @@ public class Busqueda extends JFrame {
 		
 		tbHuespedes = new JTable(modeloHuesped);
 		JScrollPane scrollHuesped = new JScrollPane(tbHuespedes);
-
 		tbHuespedes.getTableHeader().setBackground(new Color(46, 126, 163));
-
-		
-		
 		tbHuespedes.setFont(new Font("Arial", Font.PLAIN, 14));
 		panel.addTab("Huéspedes", new ImageIcon(Busqueda.class.getResource("/imagenes/persona.png")), scrollHuesped, null);
 		
+		
 		modeloHuesped = (DefaultTableModel) tbHuespedes.getModel();
+
 		modeloHuesped.addColumn("Id");
 		modeloHuesped.addColumn("Nombre");
 		modeloHuesped.addColumn("Apellido");
@@ -297,26 +287,29 @@ public class Busqueda extends JFrame {
 		modeloHuesped.addColumn("Id Reserva");
 		
 		cargarTablaHuespedes();
-	
+		
 		tbReservas = new JTable(modeloReserva);
 		JScrollPane scrollReserva = new JScrollPane(tbReservas);
 		tbReservas.getTableHeader().setBackground(new Color(46, 126, 163));
 		tbReservas.setFont(new Font("Arial", Font.PLAIN, 14));
 		panel.addTab("Reservas", new ImageIcon(Busqueda.class.getResource("/imagenes/calendario.png")), scrollReserva, null);
 		modeloReserva = (DefaultTableModel) tbReservas.getModel();
+	
 		modeloReserva.addColumn("Id");
 		modeloReserva.addColumn("Fecha Entrada");
 		modeloReserva.addColumn("Fecha Salida");
 		modeloReserva.addColumn("Valor");
-		modeloReserva.addColumn("Forma de pago");		
+		modeloReserva.addColumn("Forma de pago");
+		
 		cargarTablaReservas();
-
+	
 		JButton btnEliminar = new JButton("");
 		btnEliminar.setIcon(new ImageIcon(Busqueda.class.getResource("/imagenes/deletar.png")));
 		btnEliminar.setBackground(SystemColor.menu);
 		btnEliminar.setBounds(651, 416, 54, 41);
 		contentPane.add(btnEliminar);
 		
+	
 		//LISTENER DE TABLA CUANDO CAMBIAMOS DE PESTAÑA
 		panel.addChangeListener(new ChangeListener() {
 
@@ -332,29 +325,25 @@ public class Busqueda extends JFrame {
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			try {
-				if(tab==0) {
-					//tbHuespedes.repaint();
+				if(tab==0) {				
 					int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar al huésped?", "¿Eliminar Huésped?", JOptionPane.YES_NO_OPTION);
 				
-				if (reply == JOptionPane.YES_OPTION) {
-					 
+				if (reply == JOptionPane.YES_OPTION) {	 
 					eliminarHuesped();
-				//	tbReservas.repaint();
 				   } else {
 				    JOptionPane.showMessageDialog(null, "Se cancelo la eliminación del huésped");
 				   };
 				}
 			
 				if(tab==1) {
-					tbReservas.repaint();
+					
 					int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar la reserva?", "¿Eliminar reserva?", JOptionPane.YES_NO_OPTION);
 					
 					if (reply == JOptionPane.YES_OPTION) {
-						
+
 						eliminarReserva();
 						limpiarTablaHuesped();
 						cargarTablaHuespedes();
-						//tbHuespedes.repaint();
 					
 					   } else {
 					    JOptionPane.showMessageDialog(null, "Se cancelo la eliminación de la reserva");
@@ -377,8 +366,7 @@ public class Busqueda extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if(tab==0) {
-						//huespedController.cancelarHuesped();
-						tbHuespedes.repaint();
+
 						int reply = JOptionPane.showConfirmDialog(null, "Está seguro que cancelar los cambios realizados en Huespedes?", "¿Cancelar cambios?", JOptionPane.YES_NO_OPTION);
 						
 						if (reply == JOptionPane.YES_OPTION) {
@@ -390,9 +378,7 @@ public class Busqueda extends JFrame {
 					};
 					
 					if(tab==1) {
-						
-						//reservaController.cancelarReserva(); 
-						tbReservas.repaint();
+
 						int reply = JOptionPane.showConfirmDialog(null, "Está seguro que cancelar los cambios realizados en Reservas?", "¿Cancelar cambios?", JOptionPane.YES_NO_OPTION);
 						
 						if (reply == JOptionPane.YES_OPTION) {
@@ -404,7 +390,7 @@ public class Busqueda extends JFrame {
 						} 
 					}
 				} catch (Exception e2) {
-						// TODO: handle exception
+					throw new RuntimeException(e2);
 				}
 				
 			}
@@ -415,6 +401,8 @@ public class Busqueda extends JFrame {
 		lblNewLabel_2.setBounds(25, 10, 104, 107);
 		contentPane.add(lblNewLabel_2);
 		setResizable(false);
+		
+		 
 	}
 	
 
@@ -441,7 +429,7 @@ public class Busqueda extends JFrame {
 	                		reserva.getCheckin(),
 	                		reserva.getCheckout(),
 	                		reserva.getValorToString(),
-	                		reserva.getFormaPago()})
+	                		reserva.getFormaPagoString()})
 	       );
 	    }
 	 	
@@ -499,7 +487,7 @@ public class Busqueda extends JFrame {
 	                    String fechaIngreso = (String) modeloReserva.getValueAt(tbReservas.getSelectedRow(), 1);
 	                    String fechaSalida = (String) modeloReserva.getValueAt(tbReservas.getSelectedRow(), 2);
 	                    String valor = (String) modeloReserva.getValueAt(tbReservas.getSelectedRow(), 3);
-	                    int formaPago =Integer.valueOf(modeloReserva.getValueAt(tbReservas.getSelectedRow(), 4).toString());
+	                    String formaPago =(String) modeloReserva.getValueAt(tbReservas.getSelectedRow(), 4);
 	                   
 	                    var filasModificadas = this.reservaController.editar(idReserva, fechaIngreso, fechaSalida, valor,formaPago);
 	                    

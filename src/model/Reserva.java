@@ -16,6 +16,11 @@ public class Reserva {
 
 	private Integer formaPago;
 	
+	private String formaPagoString;
+	
+	
+	
+
 	public Reserva(String checkin, String checkout, Long valor, Integer formaPago) {
 		this.checkin = checkin;
 		this.checkout = checkout;
@@ -31,6 +36,16 @@ public class Reserva {
 		this.formaPago = formaPago;
 	}
 	
+	public Reserva(Integer idReserva, String checkin, String checkout, String valorToString, String formaPagoString) {
+		super();
+		this.idReserva = idReserva;
+		this.checkin = checkin;
+		this.checkout = checkout;
+		this.valorToString = valorToString;
+		this.formaPagoString = formaPagoString;
+	}
+	
+
 	public Reserva(Integer idReserva) {
 		this.idReserva=idReserva;
 	}
@@ -73,6 +88,14 @@ public class Reserva {
 	public void setFormaPago(Integer formaPago) {
 		this.formaPago = formaPago;
 	}
+	public String getFormaPagoString() {
+		return formaPagoString;
+	}
+
+	public void setFormaPagoString(String formaPagoString) {
+		this.formaPagoString = formaPagoString;
+	}
+
 	
 	public String getValorToString() {
 		String pattern = "###,###,###";
