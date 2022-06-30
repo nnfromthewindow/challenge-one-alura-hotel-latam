@@ -29,7 +29,7 @@ El sistema de busqueda filtra por numero de id de reserva y apellido, ademas en 
 ![image](https://user-images.githubusercontent.com/97917996/176770767-fb2b9dbb-7438-4239-85f2-f9757359370e.png)
 
 
-El esquema de la base de datos es el siguiente:
+El esquema de la base de datos MySQL es el siguiente:
 
 ![image](https://user-images.githubusercontent.com/97917996/176768619-9236df83-df63-4323-95a5-ae5aa63366d0.png)
 
