@@ -23,10 +23,19 @@ A la seccion para agregar al huesped que realizo la reserva se le incorporaron t
 
 ![image](https://user-images.githubusercontent.com/97917996/176556727-4a4cf4de-1f45-420d-9fb1-54645d644c8f.png)
 
+El sistema de busqueda filtra por numero de id de reserva y apellido, ademas en esta seccion se puede editar y borrar reservas y huespedes, asi como cancelar los registros eliminados haciendo rollback para devolver nuestros registros iniciales a la sesion que nos pregunta si queremos guardar los cambios, recien ahi commitea los cambios
+![image](https://user-images.githubusercontent.com/97917996/176770669-62e1d5e9-ef49-4399-af96-4af9956992ae.png)
+
+![image](https://user-images.githubusercontent.com/97917996/176770767-fb2b9dbb-7438-4239-85f2-f9757359370e.png)
 
 
+El esquema de la base de datos es el siguiente:
 
+![image](https://user-images.githubusercontent.com/97917996/176768619-9236df83-df63-4323-95a5-ae5aa63366d0.png)
 
+Video con el funcionamiento del programa:
+
+https://user-images.githubusercontent.com/97917996/176768746-f80c06ad-ac00-4464-97b4-9ac8b570cac4.mp4
 
 
 ---
